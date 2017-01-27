@@ -12,6 +12,9 @@ class MailLogEntry extends Model
     protected $guarded = ['uuid'];
     public $incrementing = false;
 
+    public $status_text = null;
+    public $status_style = null;
+
     /**
      * Indicates if the model should be timestamped.
      *
@@ -50,7 +53,8 @@ class MailLogEntry extends Model
         {
             $status_arr[] = 'B/L';
         }
-        return (count($status_arr)) ? $status_arr : ['Clean'];
+        $result = (count($status_arr)) ? $status_arr : ['Clean'];
+        return $result;
     }
 
     public function get_status_classes()
@@ -109,8 +113,8 @@ class MailLogEntry extends Model
             $classes[] = 'blacklisted';
             $classes[] = 'is-dark';
         }
-
-        return implode(' ', $classes);
+        $result = implode(' ', $classes);
+        return $result;
     }
 
     public function spamreport_formatted()

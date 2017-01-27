@@ -31,26 +31,6 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function messages()
-    {
-        return view('messages');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function message_detail($message)
-    {
-        return view('message_detail');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function lists()
     {
         return view('lists');
@@ -65,4 +45,15 @@ class HomeController extends Controller
     {
         return view('quarantine');
     }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function tools()
+    {
+        return view('tools');
+    }
+
 }

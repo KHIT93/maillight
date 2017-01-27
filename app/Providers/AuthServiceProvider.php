@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'MailLight\Model' => 'MailLight\Policies\ModelPolicy',
+        //'MailLight\Model' => 'MailLight\Policies\ModelPolicy',
     ];
 
     /**
@@ -24,7 +24,18 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        //
+        /*try
+        {
+            foreach ($this->getPermissions() as $permission)
+            {
+                Gate::define($permission->name, function($user) use ($permission)
+                {
+                    return $user->hasRole($permission->roles);
+                });
+            }
+        }
+        catch(\PDOException $ex)
+        {
+        }*/
     }
 }

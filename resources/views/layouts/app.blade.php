@@ -45,11 +45,13 @@
                 </div>
             </div>
         </nav>
+        @yield('before_content')
         <main class="content">
             <hr>
             @yield('content')
             <hr>
         </main>
+        @yield('after_content')
         <footer class="footer">
             <div class="container">
                 <div class="content has-text-centered">
@@ -66,9 +68,30 @@
                 </div>
             </div>
         </footer>
+        <div class="modal is-active" v-show="is_loading">
+            <div class="modal-background"></div>
+            <!--<div class="modal-content"> -->
+                <span class="icon">
+                    <i class="fa fa-circle-o-notch fa-spin fa-fw" style="font-size: 50px; color: white;"></i>
+                    <span class="sr-only">Loading...</span>
+                </span>
+            <!--</div>-->
+        </div>
+        <div class="modal is-active" v-if="!js_enabled">
+            <div class="modal-background"></div>
+            <div class="modal-card">
+                <header class="modal-card-head">
+                    <p class="modal-card-title">Warning!</p>
+                </header>
+                <section class="modal-card-body">
+                    <p>
+                        Please be aware that this application requires JavaScript to be enabled to work properly.
+                    </p>
+                </section>
+            </div>
+        </div>
     </div>
-
     <!-- Scripts -->
-    @yield('scripts')
+    @yield('scripts', '<script async src="/js/app.js"></script>')
 </body>
 </html>

@@ -3,12 +3,13 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
 // Variables
-@import "variables";
+//@import "variables";
 
 // Bulma
 @import "node_modules/bulma/bulma";
 
 // Font-Awesome
+$fa-font-path:   "/fonts";
 @import "node_modules/font-awesome/scss/font-awesome";
 
 .nav-item a.is-tab:hover, .nav-item a.is-tab:focus, a.nav-item.is-tab:hover, a.nav-item.is-tab:focus {

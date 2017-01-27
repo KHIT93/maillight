@@ -42,6 +42,7 @@ class MigrateMailwatchCommand extends Command
     {
         $this->error('WARNING! This will convert the schema of your specified mailwatch database into a structure matching MailLight. This process cannot be reverted unless you have a backup of your data');
         if ($this->confirm('Do you wish to continue?')) {
+            $this->line(\Carbon\Carbon::now()->__toString());
             //Rename existing users table before creating the new users structure
             if(Schema::hasTable('users'))
             {
@@ -50,27 +51,28 @@ class MigrateMailwatchCommand extends Command
             }
             $this->line('Initiate schema and data migration');
             $this->call('migrate:install');
-            $this->line('Create new schema for users');
+            //$this->line('Create new schema for users');
             //Create new table for users
-            Schema::create('users', function (Blueprint $table) {
-                $table->uuid('uuid')->primary();
-                $table->string('name');
-                $table->string('email')->unique();
-                $table->string('password');
-                $table->rememberToken();
-                $table->tinyInteger('quarantine_report')->nullable();
-                $table->tinyInteger('spamscore')->nullable();
-                $table->tinyInteger('highspamscore')->nullable();
-                $table->tinyInteger('noscan')->nullable();
-                $table->string('quarantine_rcpt', 60)->nullable();
-                $table->timestamps();
-            });
-            //Create table for password resets
-            Schema::create('password_resets', function (Blueprint $table) {
-                $table->string('email')->index();
-                $table->string('token')->index();
-                $table->timestamp('created_at')->nullable();
-            });
+            //Schema::create('users', function (Blueprint $table) {
+            //    $table->uuid('uuid')->primary();
+            //    $table->string('name');
+            //    $table->string('email')->unique();
+            //    $table->string('password');
+            //    $table->rememberToken();
+            //    $table->string('api_token', 60)->unique();
+            //    $table->tinyInteger('quarantine_report')->nullable();
+            //    $table->tinyInteger('spamscore')->nullable();
+            //    $table->tinyInteger('highspamscore')->nullable();
+            //    $table->tinyInteger('noscan')->nullable();
+            //    $table->string('quarantine_rcpt', 60)->nullable();
+            //    $table->timestamps();
+            //});
+            ////Create table for password resets
+            //Schema::create('password_resets', function (Blueprint $table) {
+            //    $table->string('email')->index();
+            //    $table->string('token')->index();
+            //    $table->timestamp('created_at')->nullable();
+            //});
             $this->line('Schema and data migration is now running');
             $this->line('This might take a while to complete and the process may seem stuck');
             $this->line('Please wait...');
@@ -102,6 +104,7 @@ class MigrateMailwatchCommand extends Command
                     }
                 }
             }
+            $this->line(\Carbon\Carbon::now()->__toString());
         }
     }
     protected function passbroker()

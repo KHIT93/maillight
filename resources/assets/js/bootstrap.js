@@ -1,15 +1,17 @@
 
-window._ = require('lodash');
+//import lodash from 'lodash';
+//window._ = lodash;
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
  */
-
-window.Vue = require('vue');
-let axios = require('axios');
-
+import Vue from 'vue';
+import axios from 'axios';
+import VueSelect from 'vue-select';
+window.Vue = Vue;
+Vue.component('v-select', VueSelect.VueSelect);
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware

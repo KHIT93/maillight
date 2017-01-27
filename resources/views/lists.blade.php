@@ -57,13 +57,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($whitelist as $entry)
-					<tr>
-						<td>{{ $entry->from_address }}</td>
-						<td>{{ $entry->to_address }}</td>
-						<td><a class="button is-danger is-small" href="/whitelist/destroy/{{ $entry->uuid }}">Delete</a></td>
+					<tr v-for="entry in whitelist.entries">
+						<td>@{{ entry.from_address }}</td>
+						<td>@{{ entry.to_address }}</td>
+						<td><a class="button is-danger is-small" :href="'/whitelist/destroy/'+entry.uuid" @click.prevent="delete_entry('whitelist', entry.uuid)">Delete</a></td>
 					</tr>
-					@endforeach
 				</tbody>
 			</table>
 		</div>
@@ -84,13 +82,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($blacklist as $entry)
-					<tr>
-						<td>{{ $entry->from_address }}</td>
-						<td>{{ $entry->to_address }}</td>
-						<td><a class="button is-danger is-small" href="/blacklist/destroy/{{ $entry->uuid }}" @click.prevent="delete_entry('blacklist', '{{ $entry->uuid }}')">Delete</a></td>
+					<tr v-for="entry in blacklist.entries">
+						<td>@{{ entry.from_address }}</td>
+						<td>@{{ entry.to_address }}</td>
+						<td><a class="button is-danger is-small" :href="'/blacklist/destroy/'+entry.uuid" @click.prevent="delete_entry('blacklist', entry.uuid)">Delete</a></td>
 					</tr>
-					@endforeach
 				</tbody>
 			</table>
 		</div>
@@ -98,5 +94,5 @@
 </div>
 @endsection
 @section('scripts')
-<script src="/js/lists.js"></script>
+<script async src="/js/lists.js"></script>
 @endsection

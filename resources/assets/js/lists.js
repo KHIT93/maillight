@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap';
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -18,10 +18,12 @@ const app = new Vue({
     el: '#app',
     data: {
     	whitelist: {
-    		search_key: ''
+    		search_key: '',
+            entries: []
     	},
     	blacklist: {
-    		search_key: ''
+    		search_key: '',
+            entries: []
     	},
     	search_key: '',
     	show_entry_modal: false,
@@ -30,10 +32,40 @@ const app = new Vue({
     		to_address: '',
     		to_domain: '',
     		list: ''
-    	}
+    	},
+        is_loading: true,
+        js_enabled: true
+    },
+    mounted: function() {
+        this.init_lists();
+        this.is_loading = false;
     },
     methods:
     {
+        init_lists() {
+            this.refresh_whitelist();
+            this.refresh_blacklist();
+        },
+        refresh_blacklist() {
+            this.$http.post('/api/blacklist/search').then(function(response){
+                if (response.status == 200)
+                {
+                    app.blacklist.entries = response.data;
+                }
+            }).catch(function(response){
+                console.log(response);
+            });
+        },
+        refresh_whitelist() {
+            this.$http.post('/api/whitelist/search').then(function(response){
+                if (response.status == 200)
+                {
+                    app.whitelist.entries = response.data;
+                }
+            }).catch(function(response){
+                console.log(response);
+            });
+        },
     	search_blacklist() {
     		this.search_key = this.blacklist.search_key;
     		this.search_list('blacklist');
@@ -43,16 +75,26 @@ const app = new Vue({
     		this.search_list('whitelist');
     	},
     	search_list(list) {
+            this.is_loading = true;
     		this.$http.post('/api/'+list+'/search', {
     			query_key: this.search_key
     		}).then(function(response){
-    			console.log(response);
-    		})
+    			if (response.status == 200)
+                {
+                    app[list].entries = response.data;
+                }
+    		}).catch(function(response){
+                console.log(response);
+            });
+            this.is_loading = false;
     	},
     	delete_entry(list, uuid) {
+            this.is_loading = true;
     		this.$http.delete('/api/'+list+'/destroy/'+uuid).then(function(response){
     			console.log(response);
     		});
+            this.init_lists();
+            this.is_loading = false;
     	},
     	show_modal() {
     		if(this.show_entry_modal)
@@ -79,20 +121,29 @@ const app = new Vue({
     		this.entry.from_address = '';
     		this.entry.to_address = '';
     		this.entry.to_domain = '';
+            this.entry.list = '';
     	},
     	submit_entry() {
     		let list = '';
-    		if(entry.list == 'blacklist' || entry.list == 'whitelist')
+    		if(this.entry.list == 'blacklist' || this.entry.list == 'whitelist')
     		{
-    			list = entry.list;
+    			list = this.entry.list;
     		}
     		if(list != '')
     		{
-    			this.$http.post('/api'+list+'/create', this.entry).then(function(response){
+    			this.$http.put('/api/'+list+'/create', this.entry).then(function(response){
     				console.log(response);
-    			});
+                    if(list == 'blacklist') { app.refresh_blacklist(); }
+                    if(list == 'whiteist') { app.refresh_whitelist(); }
+                    app.toggle_modal();
+    			}).catch(function(response){
+                    console.log(response);
+                    if(list == 'blacklist') { app.refresh_blacklist(); }
+                    if(list == 'whiteist') { app.refresh_whitelist(); }
+                    app.toggle_modal();
+                });
     		}
-    		this.toggle_modal();
+            
     	}
     }
 });

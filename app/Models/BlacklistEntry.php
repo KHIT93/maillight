@@ -9,7 +9,7 @@ class BlacklistEntry extends Model
 	use UuidForKey;
     protected $table = 'blacklist';
     protected $primaryKey = 'uuid';
-    protected $guarded = [];
+    protected $fillable= ['to_address', 'to_domain', 'from_address'];
     public $incrementing = false;
 
     /**
