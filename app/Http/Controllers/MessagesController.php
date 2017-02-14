@@ -14,7 +14,8 @@ class MessagesController extends Controller
      */
     public function index()
     {
-        return view('messages', ['messages' => MailLogEntry::orderBy('date', 'desc')->orderBy('time', 'desc')->take(50)->get()]);
+        //return view('messages', ['messages' => MailLogEntry::orderBy('date', 'desc')->orderBy('time', 'desc')->take(50)->get()]);
+        return view('messages');
     }
 
     /**

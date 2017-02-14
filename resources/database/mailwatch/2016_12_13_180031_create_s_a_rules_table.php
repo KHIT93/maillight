@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingsTable extends Migration
+class CreateSARulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateSettingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
-            $table->uuid('uuid');
-            $table->string('name');
-            $table->text('value');
-            $table->timestamps();
+        Schema::table('sa_rules', function (Blueprint $table) {
+            //if($table->engine == 'MyISAM')
+            //{
+                DB::statement('ALTER TABLE `sa_rules` ENGINE = InnoDB');
+            //}
         });
     }
 
@@ -28,6 +28,6 @@ class CreateSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::drop('sa_rules');
     }
 }

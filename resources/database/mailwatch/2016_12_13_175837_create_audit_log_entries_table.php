@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateAuditLog extends Migration
+class CreateAuditLogEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -19,10 +19,11 @@ class MigrateAuditLog extends Migration
                 //$table->engine = 'InnoDB';
                 DB::statement('ALTER TABLE `audit_log` ENGINE = InnoDB');
             //}
-            $table->uuid('uuid');
+            $table->uuid('uuid')->nullable();
         });
         DB::statement('UPDATE `audit_log` SET `uuid` = uuid()');
         Schema::table('audit_log', function (Blueprint $table) {
+            DB::statement('ALTER TABLE `audit_log` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });
     }

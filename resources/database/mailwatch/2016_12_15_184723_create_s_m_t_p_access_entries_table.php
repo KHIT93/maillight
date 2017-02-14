@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateBlacklist extends Migration
+class CreateSMTPAccessEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class MigrateBlacklist extends Migration
      */
     public function up()
     {
-        Schema::table('blacklist', function (Blueprint $table) {
+        Schema::table('smtpaccess', function (Blueprint $table) {
             //if($table->engine == 'MyISAM')
             //{
-                DB::statement('ALTER TABLE `blacklist` ENGINE = InnoDB');
+                DB::statement('ALTER TABLE `smtpaccess` ENGINE = InnoDB');
             //}
             $table->index('id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->nullable();
         });
-        DB::statement('UPDATE `blacklist` SET `uuid` = uuid()');
-        Schema::table('blacklist', function (Blueprint $table) {
+        DB::statement('UPDATE `smtpaccess` SET `uuid` = uuid()');
+        Schema::table('smtpaccess', function (Blueprint $table) {
             $table->dropPrimary('id');
             $table->renameColumn('id', 'mailwatch_id');
+            DB::statement('ALTER TABLE `smtpaccess` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });
     }
@@ -36,6 +37,6 @@ class MigrateBlacklist extends Migration
      */
     public function down()
     {
-        Schema::drop('blacklist');
+        Schema::drop('smtpaccess');
     }
 }

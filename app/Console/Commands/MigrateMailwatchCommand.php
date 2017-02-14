@@ -44,13 +44,13 @@ class MigrateMailwatchCommand extends Command
         if ($this->confirm('Do you wish to continue?')) {
             $this->line(\Carbon\Carbon::now()->__toString());
             //Rename existing users table before creating the new users structure
-            if(Schema::hasTable('users'))
+            if(Schema::hasTable('users') && !Schema::hasTable('mailwatch_users'))
             {
                 $this->line('Relocating existing users to a temporary location');
                 Schema::rename('users', 'mailwatch_users');
             }
             $this->line('Initiate schema and data migration');
-            $this->call('migrate:install');
+            //$this->call('migrate:install');
             //$this->line('Create new schema for users');
             //Create new table for users
             //Schema::create('users', function (Blueprint $table) {
@@ -77,19 +77,24 @@ class MigrateMailwatchCommand extends Command
             $this->line('This might take a while to complete and the process may seem stuck');
             $this->line('Please wait...');
             $this->call('migrate', [
-                '--path' => 'resources/database/mailwatch/'
+                '--path' => 'resources/database/mailwatch/',
+                '-vvv' => true,
+                '--step' => true
             ]);
+            $this->call('migrate');
             $this->info('Schema and data migration completed');
             $this->line('Creating a new administrator account');
             //Create the new administrator account
-            \MailLight\Models\User::create([
+            \MailLight\Models\User::forceCreate([
                 'name' => 'Administrator',
                 'email' => 'admin@localhost',
-                'password' => 'admin'
+                'password' => 'admin',
+                'api_token' => str_random(60)
             ]);
+            $this->line(\Carbon\Carbon::now()->__toString());
             $this->line('Migrating user accounts');
             //Copy users to the new users table
-            \DB::statement('INSERT INTO `users` (`uuid`, `name`, `email`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`) SELECT uuid(), `fullname`, `username`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt` FROM `mailwatch_users`');
+            \DB::statement('INSERT INTO `users` (`uuid`, `name`, `email`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, `api_token`) SELECT uuid(), `fullname`, `username`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, RAND(60) FROM `mailwatch_users`');
             $this->info('Users have been migrated');
             if ($this->confirm('Would you like to remove the old users table?')) { Schema::drop('mailwatch_users'); }
             $this->info('Migration is now completed. All users will need reset their passwords due to the usage of stronger encryption');

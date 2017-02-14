@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateInq extends Migration
+class CreateInQueuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,15 @@ class MigrateInq extends Migration
     public function up()
     {
         Schema::table('inq', function (Blueprint $table) {
-            //if($table->engine == 'MyISAM')
-            //{
-                DB::statement('ALTER TABLE `inq` ENGINE = InnoDB');
-            //}
-            $table->uuid('uuid');
+            $table->dropIndex('inq_hostname');
+        });
+        Schema::table('inq', function (Blueprint $table) {
+            DB::statement('ALTER TABLE `inq` ENGINE = InnoDB');
+            $table->uuid('uuid')->nullable();
         });
         DB::statement('UPDATE `inq` SET `uuid` = uuid()');
         Schema::table('inq', function (Blueprint $table) {
+            DB::statement('ALTER TABLE `inq` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });
     }

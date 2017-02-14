@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateSaRules extends Migration
+class CreateMCPRulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class MigrateSaRules extends Migration
      */
     public function up()
     {
-        Schema::table('sa_rules', function (Blueprint $table) {
+        Schema::table('mcp_rules', function (Blueprint $table) {
             //if($table->engine == 'MyISAM')
             //{
-                DB::statement('ALTER TABLE `sa_rules` ENGINE = InnoDB');
+                DB::statement('ALTER TABLE `mcp_rules` ENGINE = InnoDB');
             //}
         });
     }
@@ -28,6 +28,6 @@ class MigrateSaRules extends Migration
      */
     public function down()
     {
-        Schema::drop('sa_rules');
+        Schema::drop('mcp_rules');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateDomaintable extends Migration
+class CreateDomainsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -18,11 +18,12 @@ class MigrateDomaintable extends Migration
             //{
                 DB::statement('ALTER TABLE `domaintable` ENGINE = InnoDB');
             //}
-            $table->uuid('uuid');
+            $table->uuid('uuid')->nullable();
         });
         DB::statement('UPDATE `domaintable` SET `uuid` = uuid()');
         Schema::table('domaintable', function (Blueprint $table) {
             $table->dropPrimary('domainname');
+            DB::statement('ALTER TABLE `domaintable` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });
     }

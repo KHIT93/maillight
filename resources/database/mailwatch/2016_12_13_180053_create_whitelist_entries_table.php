@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class MigrateWhitelist extends Migration
+class CreateWhitelistEntriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,17 +14,18 @@ class MigrateWhitelist extends Migration
     public function up()
     {
         Schema::table('whitelist', function (Blueprint $table) {
-            //if($table->engine == 'MyISAM')
-            //{
-                DB::statement('ALTER TABLE `whitelist` ENGINE = InnoDB');
-            //}
+            $table->dropIndex('whitelist_uniq');
+        });
+        Schema::table('whitelist', function (Blueprint $table) {
+            DB::statement('ALTER TABLE `whitelist` ENGINE = InnoDB');
             $table->index('id');
-            $table->uuid('uuid');
+            $table->uuid('uuid')->nullable();
         });
         DB::statement('UPDATE `whitelist` SET `uuid` = uuid()');
         Schema::table('whitelist', function (Blueprint $table) {
             $table->dropPrimary('id');
             $table->renameColumn('id', 'mailwatch_id');
+            DB::statement('ALTER TABLE `whitelist` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });
     }

@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \MailLight\Console\Commands\MigrateMailwatchCommand::class,
+        \MailLight\Console\Commands\ConvertToUtf8Command::class,
     ];
 
     /**
@@ -26,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        //$schedule->command('database:gc')->daily();
+        //$schedule->command('database:optimize')->daily();
     }
 
     /**

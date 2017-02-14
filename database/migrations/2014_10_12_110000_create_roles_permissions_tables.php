@@ -13,6 +13,7 @@ class CreateRolesPermissionsTables extends Migration
     {
         // Create table for storing roles
         Schema::create('roles', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->uuid('uuid');
             $table->string('name')->unique();
             $table->string('label')->nullable();
@@ -20,20 +21,22 @@ class CreateRolesPermissionsTables extends Migration
         });
 
         // Create table for associating roles to users (Many-to-Many)
-        Schema::create('role_user', function (Blueprint $table) {
+        /*Schema::create('role_user', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->uuid('user_id');
             $table->uuid('role_id');
-
-            $table->foreign('user_id')->references('uuid')->on('users')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('uuid')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
-
             $table->primary(['user_id', 'role_id']);
         });
+        Schema::table('role_user', function (Blueprint $table) {
+            $table->foreign('user_id')->references('uuid')->on('users')
+                ->onDelete('cascade');
+            $table->foreign('role_id')->references('uuid')->on('roles')
+                ->onDelete('cascade');
+        });*/
 
         // Create table for storing permissions
         Schema::create('permissions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->uuid('uuid');
             $table->string('name')->unique();
             $table->string('label')->nullable();
@@ -41,17 +44,18 @@ class CreateRolesPermissionsTables extends Migration
         });
 
         // Create table for associating permissions to roles (Many-to-Many)
-        Schema::create('permission_role', function (Blueprint $table) {
+        /*Schema::create('permission_role', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->uuid('permission_id');
             $table->uuid('role_id');
-
-            $table->foreign('permission_id')->references('uuid')->on('permissions')
-                ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('uuid')->on('roles')
-                ->onUpdate('cascade')->onDelete('cascade');
-
             $table->primary(['permission_id', 'role_id']);
         });
+        Schema::table('permission_role', function (Blueprint $table) {
+            $table->foreign('permission_id')->references('uuid')->on('permissions')
+                ->onDelete('cascade');
+            $table->foreign('role_id')->references('uuid')->on('roles')
+                ->onDelete('cascade');
+        });*/
     }
 
     /**
