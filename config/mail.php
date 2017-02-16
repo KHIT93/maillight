@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -106,5 +106,82 @@ return [
             resource_path('views/vendor/mail'),
         ],
     ],
+
+    'mailscanner' => [
+        /*
+        |--------------------------------------------------------------------------
+        | MailScanner Configuration Directory
+        |--------------------------------------------------------------------------
+        |
+        | This is the path on local server where the MailScanner application
+        | configuration is located.
+        |
+        */
+        'config_dir' => env('MAILSCANNER_CONFIG_DIR', '/etc/MailScanner/'),
+        /*
+        |--------------------------------------------------------------------------
+        | MailScanner Libraries Directory
+        |--------------------------------------------------------------------------
+        |
+        | This is the path on local server where the MailScanner application
+        | libraries located.
+        |
+        */
+        'lib_dir' => env('MAILSCANNER_LIB_DIR', '/usr/share/MailScanner/'),
+        /*
+        |--------------------------------------------------------------------------
+        | MailScanner Executable
+        |--------------------------------------------------------------------------
+        |
+        | This is the path to the MailScanner executable file, which is used
+        | to perform various actions on the filtered email.
+        |
+        */
+        'executable' => env('MAILSCANNER_EXECUTABLE', '/usr/sbin/MailScanner'),
+    ],
+    'spamassassin' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Spam Assassin Executables
+        |--------------------------------------------------------------------------
+        |
+        | This is the path to the folder, where all the executable
+        | files/applications for Spam Assassin are located
+        | These are used to handle filtering of Spam messages.
+        |
+        */
+        'executable' => env('SPAMASSASSIN_DIR', '/usr/bin/'),
+        /*
+        |--------------------------------------------------------------------------
+        | Spam Assassin Rules Directory
+        |--------------------------------------------------------------------------
+        |
+        | This is the location of the Spam Assassin Rules that are applied to
+        | filtered email.
+        |
+        */
+        'rules_dir' => env('SPAMASSASSIN_RULES_DIR', '/usr/share/spamassassin/'),
+        /*
+        |--------------------------------------------------------------------------
+        | Spam Assassin Preferences File
+        |--------------------------------------------------------------------------
+        |
+        | This is the path to the file where MailScanner keeps all
+        | of the preferences defined for Spam Assasin
+        |
+        */
+        'preferences' => env('SPAMASSASSIN_PREFS', 'spam.assassin.prefs.conf')
+    ],
+    /*
+    |--------------------------------------------------------------------------
+    | Mail Log Location
+    |--------------------------------------------------------------------------
+    |
+    | This is the location of the mail log on the local system
+    | This is used to define which file is used to store information about
+    | incoming and outgoing messages.
+    |
+    */
+    'log' => env('MAILLOG', '/var/log/maillog'),
 
 ];

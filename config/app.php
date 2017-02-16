@@ -126,6 +126,81 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Retention period for log
+    |--------------------------------------------------------------------------
+    |
+    | Here you can configure for how many days the application will keep
+    | entries in the mail log.
+    | If you for example set this to 30, then the application will
+    | automatically delete any records older than 30 days.
+    | Please note that this setting also applies to the messages
+    | stored in the retention folders on the MailScanner instances,
+    | and not just the records in the database.
+    |
+    | If this is set to 0, then nothing will be removed. It is however
+    | recommend that to set this to an appropriate value based on
+    | where environment where the application is deployed.
+    |
+    | This setting applies to maillog, mta_log and audit_log tables.
+    |
+    */
+    'log_days_to_keep' => 90,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Distributed Setup
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure the settings for distributed setup,
+    | where multiple MailScanner instances work together to process mail,
+    | and share a single database.
+    |
+    */
+    'distributed' => [
+        /*
+        |--------------------------------------------------------------------------
+        | Management Node
+        |--------------------------------------------------------------------------
+        |
+        | Here you can configure if the server running this instance of the
+        | application is the central management server that users are Logging
+        | in to, in order to monitor and manage the mail filter.
+        |
+        */
+        'management' => false,
+        /*
+        |--------------------------------------------------------------------------
+        | Service Node
+        |--------------------------------------------------------------------------
+        |
+        | Here you can configure if the server running this instance of the
+        | application is a so called service node, which is handling the
+        | actual filtering and scanning of incoming and outgoing email
+        | and reports everything to a central database.
+        |
+        | Please note that a service node does not have a web interface,
+        | but instead only provides the API's used to manage the mail operations
+        | from the management node.
+        | The web inteface will only be available during inital deployment.
+        |
+        */
+        'service' => false,
+        /*
+        |--------------------------------------------------------------------------
+        | Standalone server
+        |--------------------------------------------------------------------------
+        |
+        | Here you can configure if the server running this instance of the
+        | application is a standalone server, which means that it handles
+        | mail filtering and mail scanning, as well as hosting the management
+        | web interface used by users and administrators.
+        |
+        */
+        'standalone' => true,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
