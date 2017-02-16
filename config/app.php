@@ -167,7 +167,7 @@ return [
         | in to, in order to monitor and manage the mail filter.
         |
         */
-        'management' => false,
+        'management' => env('MANAGEMENT_NODE', false),
         /*
         |--------------------------------------------------------------------------
         | Service Node
@@ -184,7 +184,7 @@ return [
         | The web inteface will only be available during inital deployment.
         |
         */
-        'service' => false,
+        'service' => env('SERVICE_NODE', false),
         /*
         |--------------------------------------------------------------------------
         | Standalone server
@@ -196,7 +196,7 @@ return [
         | web interface used by users and administrators.
         |
         */
-        'standalone' => true,
+        'standalone' => env('STANDALONE_SERVER', true),
     ],
 
     /*
