@@ -2,9 +2,13 @@
 
 @section('content')
 <div class="container">
-<p class="has-text-centered" v-if="!report_ready">
-	Generating your report. Please wait while we collect the necessary data...
+<p class="has-text-centered">
+	<span v-if="!report_ready && !report_error">
+		Generating your report. Please wait while we collect the necessary data...
+	</span>
+	<span v-text="report_error_message" v-if="report_error"/>
 </p>
+
 <div v-show="report_ready">
 	<!-- Chart.js graph here -->
 	<h2 class="has-text-centered">Total mail processed by date</h2>

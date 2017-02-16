@@ -188,24 +188,32 @@ class ReportsController extends Controller
      */
     public function filter_messages_by_date()
     {
-        $data = $this->get_filtered_data(true, false)['data']->groupBy('date');
-        $labels = [];
-        $results = [];
-        foreach ($data as $day) {
-            $stats = [
-                'label' => $day->first()->date,
-                'messages' => count($day),
-                'virus' => $day->sum('virusinfected') + $day->sum('otherinfected'),
-                'msg_virus_ratio' => 0,
-                'spam' => $day->sum('isspam') + $day->sum('ishighspam'),
-                'msg_spam_ratio' => 0,
-                'volumne' => $day->sum('size')
-            ];
-            $stats['msg_virus_ratio'] = ($stats['virus'] > 0) ? ($stats['virus'] / $stats['messages']) * 100 : 0;
-            $stats['msg_spam_ratio'] = ($stats['spam'] > 0) ? ($stats['spam'] / $stats['messages']) * 100 : 0;
-            $results[] = $stats;
-            $labels[] = $day->first()->date;
+        if(session('reports_filter_domain') != [])
+        {
+            $data = $this->get_filtered_data(true, false)['data']->groupBy('date');
+            $labels = [];
+            $results = [];
+            foreach ($data as $day) {
+                $stats = [
+                    'label' => $day->first()->date,
+                    'messages' => count($day),
+                    'virus' => $day->sum('virusinfected') + $day->sum('otherinfected'),
+                    'msg_virus_ratio' => 0,
+                    'spam' => $day->sum('isspam') + $day->sum('ishighspam'),
+                    'msg_spam_ratio' => 0,
+                    'volumne' => $day->sum('size')
+                ];
+                $stats['msg_virus_ratio'] = ($stats['virus'] > 0) ? ($stats['virus'] / $stats['messages']) * 100 : 0;
+                $stats['msg_spam_ratio'] = ($stats['spam'] > 0) ? ($stats['spam'] / $stats['messages']) * 100 : 0;
+                $results[] = $stats;
+                $labels[] = $day->first()->date;
+            }
+            return ['results' => $results, 'labels' => $labels];
         }
-        return ['results' => $results, 'labels' => $labels];
+        else
+        {
+            //abort(400, 'You have not applied any filters, therefore this report will not work');
+            return response()->json([ 'error' => 400, 'message' => 'You have not applied any filters, therefore this report will not work' ], 400);
+        }
     }
 }

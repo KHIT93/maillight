@@ -25109,7 +25109,9 @@ var app = new Vue({
         chart: {
             labels: [],
             datasets: []
-        }
+        },
+        report_error: false,
+        report_error_message: ''
     },
     mounted: function mounted() {
         this.get_data();
@@ -25122,6 +25124,9 @@ var app = new Vue({
                 app.chart.labels = response.data.labels;
                 app.generate_chart();
                 app.report_ready = true;
+            }).catch(function (error) {
+                app.report_error = true;
+                app.report_error_message = error.response.data.message;
             });
         },
         generate_chart: function generate_chart() {
