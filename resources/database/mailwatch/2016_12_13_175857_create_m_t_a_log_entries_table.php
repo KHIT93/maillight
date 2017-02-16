@@ -26,6 +26,7 @@ class CreateMTALogEntriesTable extends Migration
         Schema::table('mtalog', function (Blueprint $table) {
             DB::statement('ALTER TABLE `mtalog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
+            $table->index('timestamp');
         });
     }
 

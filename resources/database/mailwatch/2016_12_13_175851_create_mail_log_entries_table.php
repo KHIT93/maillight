@@ -35,6 +35,10 @@ class CreateMailLogEntriesTable extends Migration
             $table->renameColumn('id', 'mailwatch_id');
             DB::statement('ALTER TABLE `maillog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
+            $table->index('timestamp');
+            $table->index('date');
+            $table->index('time');
+            $table->index('quarantined');
         });
     }
 

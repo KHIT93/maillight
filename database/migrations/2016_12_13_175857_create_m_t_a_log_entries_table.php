@@ -15,7 +15,7 @@ class CreateMTALogEntriesTable extends Migration
     {
         Schema::create('mtalog', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->datetime('timestamp')->nullable();
+            $table->datetime('timestamp')->nullable()->index();
             $table->string('host', 255)->nullable();
             $table->string('type', 255)->nullable();
             $table->string('msg_id', 20)->nullable();

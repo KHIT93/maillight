@@ -24,6 +24,7 @@ class CreateReleaseLogEntriesTable extends Migration
         Schema::table('releaselog', function (Blueprint $table) {
             DB::statement('ALTER TABLE `releaselog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
+            $table->index('date');
         });
     }
 

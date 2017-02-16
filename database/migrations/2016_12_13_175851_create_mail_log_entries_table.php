@@ -15,7 +15,7 @@ class CreateMailLogEntriesTable extends Migration
     {
         Schema::create('maillog', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
-            $table->timestamp('timestamp');
+            $table->timestamp('timestamp')->index();
             $table->string('id', 255)->nullable();
             $table->bigInteger('size')->nullable();
             $table->string('from_address', 511)->nullable();
@@ -47,10 +47,10 @@ class CreateMailLogEntriesTable extends Migration
             $table->decimal('mcpsascore', 7, 2)->nullable();
             $table->text('mcpreport')->nullable();
             $table->string('hostname', 255)->nullable();
-            $table->date('date')->nullable();
-            $table->time('time')->nullable();
+            $table->date('date')->nullable()->index();
+            $table->time('time')->nullable()->index();
             $table->text('headers')->nullable();
-            $table->tinyInteger('quarantined')->nullable();
+            $table->tinyInteger('quarantined')->nullable()->index();
         });
     }
 
