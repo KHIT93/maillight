@@ -34,8 +34,11 @@ Route::get('/tools/mysql-status', 'ToolsController@mysql_status');
 Route::get('/tools/mailscanner-config', 'ToolsController@mailscanner_config');
 
 Route::get('/users', 'UsersController@index');
-Route::post('/users/create', 'UsersController@store');
+Route::get('/users/create', 'UsersController@create');
+Route::put('/users/create', 'UsersController@store');
+Route::get('/users/{user}/update', 'UsersController@edit');
 Route::patch('/users/{user}/update', 'UsersController@update');
+Route::get('/users/{user}/delete', 'UsersController@delete');
 Route::delete('/users/{user}/delete', 'UsersController@destroy');
 
 Route::get('/settings', 'SettingsController@index');

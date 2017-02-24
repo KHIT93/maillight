@@ -24,7 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        /*try
+        try
         {
             foreach ($this->getPermissions() as $permission)
             {
@@ -36,6 +36,15 @@ class AuthServiceProvider extends ServiceProvider
         }
         catch(\PDOException $ex)
         {
-        }*/
+        }
+    }
+    /**
+     * Fetch the collection of site permissions.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function getPermissions()
+    {
+        return \MailLight\Models\Permission::with('roles')->get();
     }
 }
