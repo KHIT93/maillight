@@ -241,9 +241,12 @@ return [
         /*
          * Package Service Providers...
          */
-
-        Laravel\Tinker\TinkerServiceProvider::class,
-
+        //if(env('APP_DEBUG', false))
+        //{
+            Laravel\Tinker\TinkerServiceProvider::class,
+            Clockwork\Support\Laravel\ClockworkServiceProvider::class,
+            Torann\GeoIP\GeoIPServiceProvider::class,
+        //}
         /*
          * Application Service Providers...
          */
@@ -301,6 +304,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'GeoIP' => Torann\GeoIP\Facades\GeoIP::class,
 
     ],
 
