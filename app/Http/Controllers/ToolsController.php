@@ -24,7 +24,10 @@ class ToolsController extends Controller
      */
     public function mysql_status()
     {
-        return view('tools');
+        return view('mysql_status', [
+            'tables' => \DB::select('SHOW TABLE STATUS'),
+            'processes' => \DB::select('SHOW FULL PROCESSLIST')
+        ]);
     }
 
     /**
