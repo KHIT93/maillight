@@ -6,11 +6,13 @@
 		</tr>
 	</thead>
 	<tbody>
-	@foreach($report as $item)
-		<tr>
-			<td>{{ $item['value'] }}</td>
-			<td>{{ $item['key'] }}</td>
-		</tr>
-	@endforeach()
+	@if(count($report))
+		@foreach($report as $item)
+			<tr>
+				<td>{{ $item['value'] }}</td>
+				<td>{{ $item['key'] }}</td>
+			</tr>
+		@endforeach
+	@endif
 	</tbody>
 </table>

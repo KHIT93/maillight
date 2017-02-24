@@ -18,10 +18,10 @@ class CreateMailLogEntriesTable extends Migration
             $table->timestamp('timestamp')->index();
             $table->string('id', 255)->nullable();
             $table->bigInteger('size')->nullable();
-            $table->string('from_address', 511)->nullable();
-            $table->string('from_domain', 255)->nullable();
-            $table->string('to_address', 511)->nullable();
-            $table->string('to_domain', 255)->nullable();
+            $table->string('from_address', 511)->nullable()->index();
+            $table->string('from_domain', 255)->nullable()->index();
+            $table->string('to_address', 511)->nullable()->index();
+            $table->string('to_domain', 255)->nullable()->index();
             $table->string('subject', 1023)->nullable();
             $table->ipAddress('clientip')->nullable();
             $table->text('archive')->nullable();
@@ -47,10 +47,11 @@ class CreateMailLogEntriesTable extends Migration
             $table->decimal('mcpsascore', 7, 2)->nullable();
             $table->text('mcpreport')->nullable();
             $table->string('hostname', 255)->nullable();
-            $table->date('date')->nullable()->index();
-            $table->time('time')->nullable()->index();
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
             $table->text('headers')->nullable();
             $table->tinyInteger('quarantined')->nullable()->index();
+            $table->index(['date', 'time']);
         });
     }
 

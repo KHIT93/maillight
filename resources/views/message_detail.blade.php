@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
 	<div class="columns">
+		<div class="column is-2"><a href="#" class="button is-primary">View message</a></div>
+		<div class="column auto"><a href="#" class="button is-primary">Actions</a></div>
+	</div>
+	<hr>
+	<div class="columns">
 		<div class="column is-2"><strong>Recieved on:</strong></div>
 		<div class="column auto">{{ $message->date }} {{ $message->time }}</div>
 	</div>
@@ -14,8 +19,8 @@
 		<div class="column is-2"><strong>Origin:</strong></div>
 		<div class="column auto">
 			<p><strong>IP Address:</strong> {{ $message->clientip }}</p>
-			<p><strong>Hostname:</strong> mail.bigdataexpo2013.com</p>
-			<p><strong>Country:</strong> Cyprus</p>
+			<p><strong>Hostname:</strong> {{ $message->sender_hostname() }}</p>
+			<p><strong>Country:</strong> {{ $message->geodata()->country }}</p>
 		</div>
 	</div>
 	<div class="columns">

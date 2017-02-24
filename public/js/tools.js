@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 196);
+/******/ 	return __webpack_require__(__webpack_require__.s = 202);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -653,37 +653,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 139:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(27);
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
-
-var app = new Vue({
-  el: '#app',
-  data: {
-    is_loading: false,
-    js_enabled: true
-  }
-});
-
-/***/ }),
-
 /***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -771,10 +740,43 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 146:
-/***/ (function(module, exports) {
+/***/ 145:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__(27);
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * include Vue and Vue Resource. This gives a great starting point for
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+
+
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the body of the page. From here, you may begin adding components to
+ * the application, or feel free to tweak this setup for your needs.
+ */
+
+var app = new Vue({
+    el: '#app',
+    data: {
+        is_loading: false,
+        js_enabled: true
+    },
+    methods: {
+        update_geoip: function update_geoip() {
+            this.$http.post('/api/tools/update-geoip').then(function (response) {
+                console.log(response);
+            }).catch(function (response) {
+                console.log(response);
+            });
+        }
+    }
+});
 
 /***/ }),
 
@@ -986,15 +988,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 196:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(139);
-module.exports = __webpack_require__(146);
-
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1113,6 +1106,14 @@ module.exports = defaults;
 module.exports = function combineURLs(baseURL, relativeURL) {
   return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
 };
+
+
+/***/ }),
+
+/***/ 202:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(145);
 
 
 /***/ }),

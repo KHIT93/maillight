@@ -12,6 +12,10 @@ class MailLogEntry extends Model
     protected $guarded = ['uuid'];
     public $incrementing = false;
 
+	protected $dates = [
+		'date'
+	];
+
     public $status_text = null;
     public $status_style = null;
 
@@ -139,7 +143,7 @@ class MailLogEntry extends Model
                 array_push($report, $this->get_sa_rule_desc($val));
             }
         }
-        
+
         foreach (array('cached', 'score=', 'required', 'autolearn=') as $val) {
             if (preg_match("/$val/", $sa_rules[0])) {
                 array_shift($sa_rules);
@@ -159,4 +163,16 @@ class MailLogEntry extends Model
         }
         return ['key' => $rule, 'value' => $rule_score];
     }
+
+	public function geodata()
+	{
+		return geoip()->getLocation($this->clientip);
+	}
+
+	public function sender_hostname()
+	{
+		return \Cache::remember('sender_hostname'.$this->clientip, 10080, function() {
+			return gethostbyaddr($this->clientip);
+		});
+	}
 }

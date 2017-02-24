@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         //          ->hourly();
         //$schedule->command('database:gc')->daily();
         //$schedule->command('database:optimize')->daily();
+        $schedule->command('geoip:update')->weekly();
     }
 
     /**

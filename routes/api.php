@@ -25,3 +25,5 @@ Route::put('/whitelist/create', 'WhitelistsController@store');
 Route::delete('/whitelist/destroy/{whitelist}', 'WhitelistsController@destroy');
 
 Route::get('/messages', 'MessagesController@list');
+
+Route::post('/tools/update-geoip', 'ToolsController@geoip');

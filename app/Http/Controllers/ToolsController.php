@@ -3,6 +3,7 @@
 namespace MailLight\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MailLight\Support\ConfigHelper;
 
 class ToolsController extends Controller
 {
@@ -33,7 +34,12 @@ class ToolsController extends Controller
      */
     public function mailscanner_config()
     {
-        return view('tools');
+        return view(
+            'mailscanner_config',
+            [
+                'config' => ConfigHelper::parseConfigFile(config('mail.mailscanner.config_dir').'MailScanner.conf')
+            ]
+        );
     }
 
     /**
@@ -43,16 +49,20 @@ class ToolsController extends Controller
      */
     public function geoip()
     {
-        return view('tools');
-    }
+        // Get default service
+        $service = app('geoip')->getService();
+        // Ensure the selected service supports updating
+        if (method_exists($service, 'update') === false) {
+            return 'The current service "' . get_class($service). '" does not support updating.';
+        }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update_geoip()
-    {
-        return view('tools');
+        // Perform update
+        if ($result = $service->update()) {
+            return ['result' => $result];
+        }
+        else {
+            return abort(400, 'Update failed');
+        }
+
     }
 }

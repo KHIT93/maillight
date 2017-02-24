@@ -36,9 +36,12 @@ class CreateMailLogEntriesTable extends Migration
             DB::statement('ALTER TABLE `maillog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
             $table->index('timestamp');
-            $table->index('date');
-            $table->index('time');
+            $table->index(['date', 'time']);
             $table->index('quarantined');
+            $table->index('from_address');
+            $table->index('from_domain');
+            $table->index('to_domain');
+            $table->index('to_address');
         });
     }
 

@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 198);
+/******/ 	return __webpack_require__(__webpack_require__.s = 201);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -979,14 +979,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 198:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(144);
-
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1105,6 +1097,14 @@ module.exports = defaults;
 module.exports = function combineURLs(baseURL, relativeURL) {
   return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
 };
+
+
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(144);
 
 
 /***/ }),

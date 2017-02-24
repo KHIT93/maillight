@@ -17,4 +17,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/reports.js', 'public/js')
    .js('resources/assets/js/reports_messages_by_date.js', 'public/js')
    .js('resources/assets/js/settings.js', 'public/js')
+   .js('resources/assets/js/tools.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');

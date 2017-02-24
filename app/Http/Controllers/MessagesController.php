@@ -35,7 +35,26 @@ class MessagesController extends Controller
      */
     public function read_mail(MailLogEntry $message)
     {
-        //return view('message_detail_display', compact('message'));
+        $quarantine_dir = \MailLight\Support\ConfigHelper::getConfVar('QuarantineDir');
+        $date = $message->date->format('Ymd');
+        $filename = '';
+        switch(true)
+        {
+            case (file_exists($quarantine_dir.'/'.$date.'/nonspam/'.$message->mailwatch_id)):
+                $filename = $date.'/nonspam/'.$message->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/spam/'.$message->mailwatch_id)):
+                $filename = $date.'/spam/'.$message->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/mcp/'.$message->mailwatch_id)):
+                $filename = $date.'/mcp/'.$message->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/'.$message->mailwatch_id.'/message')):
+                $filename = $date.'/'.$message->mailwatch_id.'/message';
+                break;
+        }
+        $file = file_get_contents($quarantine_dir.'/'.$filename);
+        return view('message_detail_display', compact('message', 'file'));
     }
 
     /**

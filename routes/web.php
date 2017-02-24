@@ -13,7 +13,6 @@
 
 Route::get('/', 'HomeController@index');
 Auth::routes();
-
 Route::get('/messages', 'MessagesController@index');
 Route::get('/messages/{message}', 'MessagesController@show');
 Route::get('/messages/{message}/content', 'MessagesController@read_mail');
@@ -33,8 +32,6 @@ Route::get('/reports/audit', 'ReportsController@audit');
 Route::get('/tools', 'HomeController@tools');
 Route::get('/tools/mysql-status', 'ToolsController@mysql_status');
 Route::get('/tools/mailscanner-config', 'ToolsController@mailscanner_config');
-Route::get('/tools/update-geoip', 'ToolsController@geoip');
-Route::get('/tools/update-geoip', 'ToolsController@update_geoip');
 
 Route::get('/users', 'UsersController@index');
 Route::post('/users/create', 'UsersController@store');
