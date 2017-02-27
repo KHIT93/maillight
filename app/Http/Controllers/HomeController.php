@@ -33,7 +33,7 @@ class HomeController extends Controller
      */
     public function lists()
     {
-        return view('lists');
+        return view('lists.index');
     }
 
     /**
@@ -53,7 +53,7 @@ class HomeController extends Controller
      */
     public function tools()
     {
-        return view('tools');
+        return view('tools.index');
     }
 
 }

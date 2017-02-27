@@ -15,7 +15,7 @@ class MessagesController extends Controller
     public function index()
     {
         //return view('messages', ['messages' => MailLogEntry::orderBy('date', 'desc')->orderBy('time', 'desc')->take(50)->get()]);
-        return view('messages');
+        return view('messages.index');
     }
 
     /**
@@ -25,7 +25,7 @@ class MessagesController extends Controller
      */
     public function show(MailLogEntry $message)
     {
-        return view('message_detail', compact('message'));
+        return view('messages.show', compact('message'));
     }
 
     /**
@@ -54,7 +54,7 @@ class MessagesController extends Controller
                 break;
         }
         $file = file_get_contents($quarantine_dir.'/'.$filename);
-        return view('message_detail_display', compact('message', 'file'));
+        return view('messages.read', compact('message', 'file'));
     }
 
     /**

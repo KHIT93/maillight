@@ -14,7 +14,7 @@ class ToolsController extends Controller
      */
     public function index()
     {
-        return view('tools');
+        return view('tools.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ToolsController extends Controller
      */
     public function mysql_status()
     {
-        return view('mysql_status', [
+        return view('tools.mysql_status', [
             'tables' => \DB::select('SHOW TABLE STATUS'),
             'processes' => \DB::select('SHOW FULL PROCESSLIST')
         ]);
@@ -38,7 +38,7 @@ class ToolsController extends Controller
     public function mailscanner_config()
     {
         return view(
-            'mailscanner_config',
+            'tools.mailscanner_config',
             [
                 'config' => ConfigHelper::parseConfigFile(config('mail.mailscanner.config_dir').'MailScanner.conf')
             ]
