@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/systeminfo', 'HomeController@systeminfo');
 Auth::routes();
 Route::get('/messages', 'MessagesController@index');
 Route::get('/messages/{message}', 'MessagesController@show');

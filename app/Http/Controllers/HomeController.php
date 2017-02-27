@@ -3,6 +3,7 @@
 namespace MailLight\Http\Controllers;
 
 use Illuminate\Http\Request;
+use MailLight\Support\ConfigHelper;
 
 class HomeController extends Controller
 {
@@ -23,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('home.index');
     }
 
     /**
@@ -43,7 +44,7 @@ class HomeController extends Controller
      */
     public function quarantine()
     {
-        return view('quarantine');
+        return view('home.quarantine');
     }
 
     /**
@@ -54,6 +55,26 @@ class HomeController extends Controller
     public function tools()
     {
         return view('tools.index');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function systeminfo()
+    {
+        $data = [
+            'php_version' => PHP_VERSION,
+            'php_bin' => PHP_BINARY,
+            'os' => PHP_OS,
+            'mailscanner_version' => ConfigHelper::getConfVar('MailScannerVersionNumber'),
+            'sa_version' => passthru(config('spamassassin.executable')." -V | tr '\\\n' ' ' | cut -d' ' -f3"),
+            'geoip_age' => \Carbon\Carbon::createFromTimestamp(filemtime(storage_path('app/geoip.mmdb')))
+                            ->diffForHumans(),
+            'core_version' => app()::VERSION
+        ];
+        return view('home.systeminfo', compact('data'));
     }
 
 }
