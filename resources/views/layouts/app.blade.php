@@ -55,17 +55,20 @@
         <footer class="footer">
             <div class="container">
                 <div class="content has-text-centered">
-                    
+
                 </div>
             </div>
         </footer>
         <div class="modal is-active" v-show="is_loading">
             <div class="modal-background"></div>
             <!--<div class="modal-content"> -->
-                <span class="icon">
+                <!--<span class="icon">
                     <i class="fa fa-circle-o-notch fa-spin fa-fw" style="font-size: 50px; color: white;"></i>
                     <span class="sr-only">Loading...</span>
-                </span>
+                </span>-->
+                <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="path" fill="none" stroke-width="3" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+                </svg>
             <!--</div>-->
         </div>
         <div class="modal is-active" v-if="!js_enabled">
