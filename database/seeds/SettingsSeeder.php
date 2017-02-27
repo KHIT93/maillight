@@ -31,10 +31,10 @@ class SettingsSeeder extends Seeder
         Setting::create(['name' => 'mail.log', 'value' => '']);
 
         Setting::create(['name' => 'quarantine.days_to_keep', 'value' => config('app.log_days_to_keep')]);
-        Setting::create(['name' => 'quarantine.from_address', 'value' => 'postmaster@'.$_SERVER['SERVER_NAME']]);
+        Setting::create(['name' => 'quarantine.from_address', 'value' => 'postmaster@'.gethostname()]);
         Setting::create(['name' => 'quarantine.from_name', 'value' => config('branding.name')]);
         Setting::create(['name' => 'quarantine.report_subject', 'value' => 'Message Quarantine Report']);
         Setting::create(['name' => 'quarantine.report_days', 'value' => '7']);
-        
+
     }
 }
