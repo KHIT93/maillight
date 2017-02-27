@@ -1,6 +1,6 @@
 <?php
 
-namespace MailLight;
+namespace MailLight\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
