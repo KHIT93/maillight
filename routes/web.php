@@ -34,6 +34,7 @@ Route::get('/tools', 'HomeController@tools');
 Route::get('/tools/mysql-status', 'ToolsController@mysql_status');
 Route::get('/tools/mailscanner-config', 'ToolsController@mailscanner_config');
 
+Route::get('/user', 'UsersController@show');
 Route::get('/users', 'UsersController@index');
 Route::get('/users/create', 'UsersController@create');
 Route::put('/users/create', 'UsersController@store');

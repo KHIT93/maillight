@@ -22,6 +22,20 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function show(Request $request)
+    {
+        if($request->ajax())
+        {
+            return $request->user();
+        }
+        return view('users.show', ['user' => auth()->user()]);
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         return view('users.form', ['user' => new User]);

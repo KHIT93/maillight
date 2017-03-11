@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 200);
+/******/ 	return __webpack_require__(__webpack_require__.s = 199);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -740,7 +740,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 142:
+/***/ 141:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -762,106 +762,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  */
 
 var app = new Vue({
-	el: '#app',
-	data: {
-		is_loading: false,
-		js_enabled: true,
-		messages: []
-	},
-	mounted: function mounted() {
-		this.update_messages();
-		setInterval(function () {
-			this.update_messages();
-		}.bind(this), 30000);
-	},
-	methods: {
-		update_messages: function update_messages() {
-			this.is_loading = true;
-			this.$http.get('/api/messages?api_token=' + Laravel.api_token).then(function (response) {
-				if (response.status == 200) {
-					app.messages = response.data;
-				}
-				app.is_loading = false;
-			}).catch(function (response) {
-				console.log(response);
-				app.is_loading = false;
-			});
-		},
-		get_message_status: function get_message_status(message) {
-			var status_arr = [];
-			if (message.isspam || message.ishighspam) {
-				status_arr.push('Spam');
-			}
-			if (message.ismcp || message.ishighmcp) {
-				$status_arr.push('MCP');
-			}
-			if (message.virusinfected) {
-				status_arr.push('Virus');
-			}
-			if (message.nameinfected) {
-				status_arr.push('Bad Content');
-			}
-			if (message.otherinfected) {
-				status_arr.push('Infected');
-			}
-			if (message.spamwhitelisted) {
-				status_arr.push('W/L');
-			}
-			if (message.spamblacklisted) {
-				status_arr.push('B/L');
-			}
-			var result = status_arr.length ? status_arr : ['Clean'];
-			return result;
-		},
-		message_status_class: function message_status_class(message) {
-			var classes = [];
-			var status_arr = this.get_message_status(message);
-
-			if (status_arr.indexOf('Spam')) {
-				if (this.ishighspam) {
-					classes.push('highspam');
-					classes.push('is-danger');
-				} else {
-					classes.push('spam');
-					classes.push('is-warning');
-				}
-			}
-			if (status_arr.indexOf('MCP')) {
-				if (this.ishighmcp) {
-					classes.push('highmcp');
-					classes.push('is-danger');
-				} else {
-					classes.push('mcp');
-					classes.push('is-warning');
-				}
-			}
-			if (this.virusinfected) {
-				classes.push('infected');
-				classes.push('is-danger');
-			}
-			if (this.nameinfected) {
-				classes.push('infected');
-				classes.push('is-warning');
-			}
-			if (this.otherinfected) {
-				classes.push('infected');
-				classes.push('is-danger');
-			}
-			if (this.spamwhitelisted) {
-				classes.push('whitelisted');
-				classes.push('is-primary');
-			}
-			if (this.spamblacklisted) {
-				classes.push('blacklisted');
-				classes.push('is-dark');
-			}
-			var result = classes.join(' ');
-			return result;
-		},
-		refresh_notice: function refresh_notice() {
-			console.log('Refreshed');
-		}
-	}
+    el: '#app',
+    data: {
+        is_loading: false,
+        js_enabled: true,
+        user: {
+            email: '',
+            password: ''
+        },
+        error: null
+    },
+    computed: {
+        loading: function loading() {
+            if (this.is_loading) {
+                return 'disabled is-loading';
+            }
+            return '';
+        }
+    }
 });
 
 /***/ }),
@@ -1074,6 +992,14 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
+/***/ 199:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(141);
+
+
+/***/ }),
+
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1192,14 +1118,6 @@ module.exports = defaults;
 module.exports = function combineURLs(baseURL, relativeURL) {
   return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
 };
-
-
-/***/ }),
-
-/***/ 200:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(142);
 
 
 /***/ }),

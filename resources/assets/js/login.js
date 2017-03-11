@@ -18,14 +18,19 @@ const app = new Vue({
     data: {
         is_loading: false,
         js_enabled: true,
-    },
-    methods: {
-        update_geoip() {
-            this.$http.post('/api/tools/update-geoip?api_token='+Laravel.api_token).then(function(response){
-                console.log(response);
-            }).catch(function(response){
-                console.log(response);
-            });
+        user: {
+            email: '',
+            password: ''
         },
+        error: null
+    },
+    computed: {
+        loading: function() {
+            if(this.is_loading)
+            {
+                return 'disabled is-loading';
+            }
+            return '';
+        }
     }
 });

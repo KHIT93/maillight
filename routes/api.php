@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+});*/
 Route::post('/blacklist/search', 'BlacklistsController@search');
 Route::put('/blacklist/create', 'BlacklistsController@store');
 Route::delete('/blacklist/destroy/{blacklist}', 'WhitelistsController@destroy');

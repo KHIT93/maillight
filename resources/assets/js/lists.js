@@ -40,14 +40,13 @@ const app = new Vue({
         this.init_lists();
         this.is_loading = false;
     },
-    methods:
-    {
+    methods: {
         init_lists() {
             this.refresh_whitelist();
             this.refresh_blacklist();
         },
         refresh_blacklist() {
-            this.$http.post('/api/blacklist/search').then(function(response){
+            this.$http.post('/api/blacklist/search?api_token='+Laravel.api_token).then(function(response){
                 if (response.status == 200)
                 {
                     app.blacklist.entries = response.data;
@@ -57,7 +56,7 @@ const app = new Vue({
             });
         },
         refresh_whitelist() {
-            this.$http.post('/api/whitelist/search').then(function(response){
+            this.$http.post('/api/whitelist/search?api_token='+Laravel.api_token).then(function(response){
                 if (response.status == 200)
                 {
                     app.whitelist.entries = response.data;
@@ -76,7 +75,7 @@ const app = new Vue({
     	},
     	search_list(list) {
             this.is_loading = true;
-    		this.$http.post('/api/'+list+'/search', {
+    		this.$http.post('/api/'+list+'/search?api_token='+Laravel.api_token, {
     			query_key: this.search_key
     		}).then(function(response){
     			if (response.status == 200)
@@ -90,7 +89,7 @@ const app = new Vue({
     	},
     	delete_entry(list, uuid) {
             this.is_loading = true;
-    		this.$http.delete('/api/'+list+'/destroy/'+uuid).then(function(response){
+    		this.$http.delete('/api/'+list+'/destroy/'+uuid+'?api_token='+Laravel.api_token).then(function(response){
     			console.log(response);
     		});
             this.init_lists();
@@ -131,7 +130,7 @@ const app = new Vue({
     		}
     		if(list != '')
     		{
-    			this.$http.put('/api/'+list+'/create', this.entry).then(function(response){
+    			this.$http.put('/api/'+list+'/create?api_token='+Laravel.api_token, this.entry).then(function(response){
     				console.log(response);
                     if(list == 'blacklist') { app.refresh_blacklist(); }
                     if(list == 'whiteist') { app.refresh_whitelist(); }
@@ -143,7 +142,7 @@ const app = new Vue({
                     app.toggle_modal();
                 });
     		}
-            
+
     	}
     }
 });

@@ -17,6 +17,7 @@
     <script>
         window.Laravel = <?php echo json_encode([
             'csrfToken' => csrf_token(),
+            'api_token' => ((auth()->check()) ? auth()->user()->api_token : "")
         ]); ?>
     </script>
 </head>
@@ -41,7 +42,7 @@
                     <a href="/tools" class="nav-item is-tab">Tools</a>
                     <a href="/systeminfo" class="nav-item is-tab">System information</a>
                     <a href="/settings" class="nav-item is-tab">Server settings</a>
-                    <a href="/auth/logout" class="nav-item is-tab">Logout</a>
+                    <a href="/logout" class="nav-item is-tab">Logout</a>
                 </div>
             </div>
         </nav>

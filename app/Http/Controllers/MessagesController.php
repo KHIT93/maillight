@@ -53,7 +53,7 @@ class MessagesController extends Controller
                 $filename = $date.'/'.$message->mailwatch_id.'/message';
                 break;
         }
-        $file = file_get_contents($quarantine_dir.'/'.$filename);
+        $file = ($filename === '') ? null : file_get_contents($quarantine_dir.'/'.$filename);
         return view('messages.read', compact('message', 'file'));
     }
 

@@ -33,9 +33,21 @@ const app = new Vue({
         this.reload_filters();
     },
     methods: {
+        user() {
+            this.$http.get('/user').then(function(response){
+                if(response.data == "")
+                {
+                    return null;
+                }
+                return response.data.api_token;
+            }).catch(function(error){
+                console.log(error.response);
+                return null;
+            });
+        },
     	get_filtered_data() {
             this.is_loading = true;
-    		this.$http.get('/reports/filter').then(function(response){
+    		this.$http.get('/reports/filter?api_token='+Laravel.api_token).then(function(response){
                 app.statistics.new = new Date(response.data.new).toLocaleDateString('da-DK');
                 app.statistics.old = new Date(response.data.old).toLocaleDateString('da-DK');
                 app.statistics.count = response.data.count.toLocaleString('da-DK');
@@ -53,7 +65,7 @@ const app = new Vue({
             let data = {};
             data['reports_filter_domain'] = this.new_filter;
             console.log(data);
-    		this.$http.post('/reports/filter', data).then(function(response){
+    		this.$http.post('/reports/filter?api_token='+Laravel.api_token, data).then(function(response){
     			console.log(response);
                 app.is_loading = false;
                 app.reload_filters();
@@ -61,7 +73,7 @@ const app = new Vue({
     	},
     	remove_filter(filter) {
             this.is_loading = true;
-    		this.$http.delete('/reports/filter/'+filter.field).then(function(response){
+    		this.$http.delete('/reports/filter/'+filter.field+'?api_token='+Laravel.api_token).then(function(response){
                 console.log(response);
                 app.is_loading = false;
                 app.reload_filters();
@@ -69,7 +81,7 @@ const app = new Vue({
     	},
         get_filter_options() {
             this.is_loading = true;
-            this.$http.get('/reports/filter/options').then(function(response){
+            this.$http.get('/reports/filter/options?api_token='+Laravel.api_token).then(function(response){
                 app.filter_options = response.data.filter_options;
                 app.active_filters = response.data.active_filters;
                 app.is_loading = false;

@@ -19,7 +19,7 @@ const app = new Vue({
     data: {
         is_loading: false,
         js_enabled: true,
-        messages: []
+        messages: [],
     },
     mounted: function() {
     	this.update_messages();
@@ -30,7 +30,7 @@ const app = new Vue({
     methods: {
     	update_messages() {
     		this.is_loading = true;
-    		this.$http.get('/api/messages').then(function(response){
+    		this.$http.get('/api/messages?api_token='+Laravel.api_token).then(function(response){
     			if(response.status == 200)
 				{
 					app.messages = response.data;
