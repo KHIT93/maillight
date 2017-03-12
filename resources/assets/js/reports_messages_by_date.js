@@ -45,7 +45,7 @@ const app = new Vue({
         },
     	get_data() {
     		this.report_ready = false;
-    		this.$http.get('/reports/filter/messages_by_date?api_token='+Laravel.api_token.then(function(response){
+    		this.$http.get('/reports/filter/messages_by_date?api_token='+Laravel.api_token).then(function(response){
     			app.statistics = response.data.results;
     			app.chart.labels = response.data.labels;
     			app.generate_chart();
