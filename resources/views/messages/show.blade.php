@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
 	<div class="columns">
-		<div class="column is-2"><a href="#" class="button is-primary">View message</a></div>
-		<div class="column auto"><a href="#" class="button is-primary">Actions</a></div>
+		<div class="column is-2"><a href="/messages/{{ $message->uuid }}/content" class="button is-primary">View message</a></div>
+		<div class="column is-2"><a href="#" class="button is-primary">Actions</a></div>
 	</div>
 	<hr>
 	<div class="columns">
 		<div class="column is-2"><strong>Recieved on:</strong></div>
-		<div class="column auto">{{ $message->date }} {{ $message->time }}</div>
+		<div class="column auto">{{ $message->date->format('l jS \of F Y') }} {{ $message->time }}</div>
 	</div>
 	<div class="columns">
 		<div class="column is-2"><strong>Recieved by:</strong></div>

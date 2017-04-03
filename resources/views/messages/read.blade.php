@@ -3,6 +3,11 @@
 @section('content')
 <div class="container">
     <div class="columns">
+        <div class="column">
+            <a href="/messages/{{ $message->uuid }}" class="button">Go back</a>
+        </div>
+    </div>
+    <div class="columns">
         <div class="column is-6">
             <div class="columns">
                 <div class="column is-3">Date</div>
@@ -31,7 +36,11 @@
 <div class="container">
     <div class="columns">
         <div class="column">
-            {{ $file }}
+            @if($file == null)
+                <p>This email is no longer located on the recieving service node. It could have been manually deleted or deleted as part of another automated task that performs cleanup</p>
+            @else
+                {{ $file }}
+            @endif
         </div>
     </div>
 </div>
