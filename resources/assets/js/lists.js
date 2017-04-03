@@ -51,8 +51,8 @@ const app = new Vue({
                 {
                     app.blacklist.entries = response.data;
                 }
-            }).catch(function(response){
-                console.log(response);
+            }).catch(function(error){
+                console.log(error.response);
             });
         },
         refresh_whitelist() {
@@ -61,8 +61,8 @@ const app = new Vue({
                 {
                     app.whitelist.entries = response.data;
                 }
-            }).catch(function(response){
-                console.log(response);
+            }).catch(function(error){
+                console.log(error.response);
             });
         },
     	search_blacklist() {
@@ -82,8 +82,8 @@ const app = new Vue({
                 {
                     app[list].entries = response.data;
                 }
-    		}).catch(function(response){
-                console.log(response);
+    		}).catch(function(error){
+                console.log(error.response);
             });
             this.is_loading = false;
     	},
@@ -135,8 +135,8 @@ const app = new Vue({
                     if(list == 'blacklist') { app.refresh_blacklist(); }
                     if(list == 'whiteist') { app.refresh_whitelist(); }
                     app.toggle_modal();
-    			}).catch(function(response){
-                    console.log(response);
+    			}).catch(function(error){
+                    console.log(error.response);
                     if(list == 'blacklist') { app.refresh_blacklist(); }
                     if(list == 'whiteist') { app.refresh_whitelist(); }
                     app.toggle_modal();
