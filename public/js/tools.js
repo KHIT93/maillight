@@ -769,10 +769,13 @@ var app = new Vue({
     },
     methods: {
         update_geoip: function update_geoip() {
+            this.is_loading = true;
             this.$http.post('/api/tools/update-geoip?api_token=' + Laravel.api_token).then(function (response) {
                 console.log(response);
+                app.is_loading = false;
             }).catch(function (response) {
                 console.log(response);
+                app.is_loading = false;
             });
         }
     }
