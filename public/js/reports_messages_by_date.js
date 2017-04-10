@@ -36985,6 +36985,7 @@ var Color = function (obj) {
 		return new Color(obj);
 	}
 
+	this.valid = false;
 	this.values = {
 		rgb: [0, 0, 0],
 		hsl: [0, 0, 0],
@@ -37004,8 +37005,6 @@ var Color = function (obj) {
 			this.setValues('hsl', vals);
 		} else if (vals = string.getHwb(obj)) {
 			this.setValues('hwb', vals);
-		} else {
-			throw new Error('Unable to parse color from string "' + obj + '"');
 		}
 	} else if (typeof obj === 'object') {
 		vals = obj;
@@ -37019,13 +37018,14 @@ var Color = function (obj) {
 			this.setValues('hwb', vals);
 		} else if (vals.c !== undefined || vals.cyan !== undefined) {
 			this.setValues('cmyk', vals);
-		} else {
-			throw new Error('Unable to parse color from object ' + JSON.stringify(obj));
 		}
 	}
 };
 
 Color.prototype = {
+	isValid: function () {
+		return this.valid;
+	},
 	rgb: function () {
 		return this.setSpace('rgb', arguments);
 	},
@@ -37368,6 +37368,8 @@ Color.prototype.setValues = function (space, vals) {
 	var maxes = this.maxes;
 	var alpha = 1;
 	var i;
+
+	this.valid = true;
 
 	if (space === 'alpha') {
 		alpha = vals;
