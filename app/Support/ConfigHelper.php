@@ -45,7 +45,7 @@ class ConfigHelper
             $fh = null;
             try
             {
-                $fh = fopen(base_path($path), 'rb');
+                $fh = fopen($path, 'rb');
             }
             catch (\Exception $e)
             {
@@ -90,7 +90,7 @@ class ConfigHelper
     {
         return \Cache::remember($dir, 525600, function() use ($dir) {
             $array_output1 = array();
-            if ($dh = opendir(base_path($dir))) {
+            if ($dh = opendir($dir)) {
                 while (($file = readdir($dh)) !== false) {
                     // remove the . and .. so that it doesn't throw an error when parsing files
                     if ($file !== '.' && $file !== '..') {
