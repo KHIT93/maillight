@@ -8,8 +8,8 @@
     <td>{{ $message->to_address }}</td>
     <td>{{ $message->subject }}</td>
     <td align="right">{{ $message->size }}</td>
-    <td align="right">{{ $message->sascore }}</td>
-    <td align="right">{{ $message->mcpsascore }}</td>
+    <td align="right">{{ $message->sa_score }}</td>
+    <td align="right">{{ $message->mcp_sa_score }}</td>
     <td>{{ implode(' ', $message->status()) }}</td>
 </tr>
 @endforeach
@@ -22,8 +22,8 @@
     <td>@{{ message.to_address }}</td>
     <td>@{{ message.subject }}</td>
     <td align="right">@{{ message.size }}</td>
-    <td align="right">@{{ message.sascore }}</td>
-    <td align="right">@{{ message.mcpsascore }}</td>
+    <td align="right">@{{ message.sa_score }}</td>
+    <td align="right">@{{ message.mcp_sascore }}</td>
     <td>@{{ get_message_status(message).join(' ') }}</td>
 </tr>
 @endif

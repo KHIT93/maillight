@@ -29,31 +29,31 @@ class MailLogEntry extends Model
     public function status()
     {
         $status_arr = [];
-        if($this->isspam || $this->ishighspam)
+        if($this->is_spam || $this->is_highspam)
         {
             $status_arr[] = 'Spam';
         }
-        if($this->ismcp || $this->ishighmcp)
+        if($this->is_mcp || $this->is_highmcp)
         {
             $status_arr[] = 'MCP';
         }
-        if($this->virusinfected)
+        if($this->virus_infected)
         {
             $status_arr[] = 'Virus';
         }
-        if($this->nameinfected)
+        if($this->name_infected)
         {
             $status_arr[] = 'Bad Content';
         }
-        if($this->otherinfected)
+        if($this->other_infected)
         {
             $status_arr[] = 'Infected';
         }
-        if($this->spamwhitelisted)
+        if($this->spam_whitelisted)
         {
             $status_arr[] = 'W/L';
         }
-        if($this->spamblacklisted)
+        if($this->spam_blacklisted)
         {
             $status_arr[] = 'B/L';
         }
@@ -68,7 +68,7 @@ class MailLogEntry extends Model
 
         if(in_array('Spam', $status_arr))
         {
-            if($this->ishighspam)
+            if($this->is_highspam)
             {
                 $classes[] = 'highspam';
                 $classes[] = 'is-danger';
@@ -81,7 +81,7 @@ class MailLogEntry extends Model
         }
         if(in_array('MCP', $status_arr))
         {
-            if($this->ishighmcp)
+            if($this->is_highmcp)
             {
                 $classes[] = 'highmcp';
                 $classes[] = 'is-danger';
@@ -92,27 +92,27 @@ class MailLogEntry extends Model
                 $classes[] = 'is-warning';
             }
         }
-        if($this->virusinfected)
+        if($this->virus_infected)
         {
             $classes[] = 'infected';
             $classes[] = 'is-danger';
         }
-        if($this->nameinfected)
+        if($this->name_infected)
         {
             $classes[] = 'infected';
             $classes[] = 'is-warning';
         }
-        if($this->otherinfected)
+        if($this->other_infected)
         {
             $classes[] = 'infected';
             $classes[] = 'is-danger';
         }
-        if($this->spamwhitelisted)
+        if($this->spam_whitelisted)
         {
             $classes[] = 'whitelisted';
             $classes[] = 'is-primary';
         }
-        if($this->spamblacklisted)
+        if($this->spam_blacklisted)
         {
             $classes[] = 'blacklisted';
             $classes[] = 'is-dark';
@@ -124,7 +124,7 @@ class MailLogEntry extends Model
     public function spamreport_formatted()
     {
         $report = [];
-        if (preg_match('/\s\((.+?)\)/i', $this->spamreport, $sa_rules)) {
+        if (preg_match('/\s\((.+?)\)/i', $this->spam_report, $sa_rules)) {
             // Get rid of the first match from the array
             array_shift($sa_rules);
             // Split the array
