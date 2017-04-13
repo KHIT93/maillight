@@ -13,25 +13,28 @@ class CreateDomainsTable extends Migration
      */
     public function up()
     {
-        Schema::table('domaintable', function (Blueprint $table) {
-            //if($table->engine == 'MyISAM')
-            //{
-                DB::statement('ALTER TABLE `domaintable` ENGINE = InnoDB');
-            //}
-            $table->uuid('uuid')->nullable();
-        });
-        DB::statement('UPDATE `domaintable` SET `uuid` = uuid()');
-        Schema::table('domaintable', function (Blueprint $table) {
-            $table->dropPrimary('domainname');
-            $table->renameColumn('domainname', 'domain_name');
-            $table->renameColumn('domainadmin', 'domain_admin');
-            $table->renameColumn('createdts', 'created_ts');
-            $table->renameColumn('relaytype', 'relay_type');
-            $table->renameColumn('relaymap', 'relay_map');
+        if(Schema::hasTable('domaintable'))
+        {
+            Schema::table('domaintable', function (Blueprint $table) {
+                //if($table->engine == 'MyISAM')
+                //{
+                    DB::statement('ALTER TABLE `domaintable` ENGINE = InnoDB');
+                //}
+                $table->uuid('uuid')->nullable();
+            });
+            DB::statement('UPDATE `domaintable` SET `uuid` = uuid()');
+            Schema::table('domaintable', function (Blueprint $table) {
+                $table->dropPrimary('domainname');
+                $table->renameColumn('domainname', 'domain_name');
+                $table->renameColumn('domainadmin', 'domain_admin');
+                $table->renameColumn('createdts', 'created_ts');
+                $table->renameColumn('relaytype', 'relay_type');
+                $table->renameColumn('relaymap', 'relay_map');
 
-            DB::statement('ALTER TABLE `domaintable` MODIFY `uuid` CHAR(36) NOT NULL');
-            $table->primary('uuid');
-        });
+                DB::statement('ALTER TABLE `domaintable` MODIFY `uuid` CHAR(36) NOT NULL');
+                $table->primary('uuid');
+            });
+        }
     }
 
     /**
