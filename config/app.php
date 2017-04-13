@@ -241,12 +241,7 @@ return [
         /*
          * Package Service Providers...
          */
-        //if(env('APP_DEBUG', false))
-        //{
-            Laravel\Tinker\TinkerServiceProvider::class,
-            Clockwork\Support\Laravel\ClockworkServiceProvider::class,
-            Torann\GeoIP\GeoIPServiceProvider::class,
-        //}
+        
         /*
          * Application Service Providers...
          */
