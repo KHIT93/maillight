@@ -24,6 +24,7 @@ class CreateSMTPAccessEntriesTable extends Migration
         DB::statement('UPDATE `smtpaccess` SET `uuid` = uuid()');
         Schema::table('smtpaccess', function (Blueprint $table) {
             $table->dropPrimary('id');
+            $table->renameColumn('smtpvalue', 'smtp_value');
             $table->renameColumn('id', 'mailwatch_id');
             DB::statement('ALTER TABLE `smtpaccess` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');

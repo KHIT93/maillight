@@ -14,13 +14,13 @@ class CreateDomainsTable extends Migration
     public function up()
     {
         Schema::create('domaintable', function (Blueprint $table) {
-            $table->string('domainname', 45)->primary();
-            $table->string('domainadmin', 45);
+            $table->string('domain_name', 45)->primary();
+            $table->string('domain_admin', 45);
             $table->string('reseller', 45);
-            $table->timestamp('createdts');
+            $table->timestamp('created_ts');
             $table->integer('accountno');
-            $table->string('relaytype', 45);
-            $table->string('relaymap', 100);
+            $table->string('relay_type', 45);
+            $table->string('relay_map', 100);
         });
     }
 

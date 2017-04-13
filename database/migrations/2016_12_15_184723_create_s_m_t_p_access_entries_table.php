@@ -17,7 +17,7 @@ class CreateSMTPAccessEntriesTable extends Migration
             $table->uuid('uuid')->primary();
             $table->integer('id');
             $table->string('prefix', 10);
-            $table->string('smtpvalue', 100);
+            $table->string('smtp_value', 100);
             $table->text('comment');
             $table->string('action', 50)->default('RELAY');
         });

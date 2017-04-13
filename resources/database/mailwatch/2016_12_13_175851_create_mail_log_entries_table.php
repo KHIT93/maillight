@@ -33,6 +33,28 @@ class CreateMailLogEntriesTable extends Migration
         DB::statement('UPDATE `maillog` SET `uuid` = uuid()');
         Schema::table('maillog', function (Blueprint $table) {
             $table->renameColumn('id', 'mailwatch_id');
+            $table->renameColumn('isspam', 'is_spam');
+            $table->renameColumn('ishighspam', 'is_highspam');
+            $table->renameColumn('issaspam', 'is_sa_spam');
+            $table->renameColumn('isrblspam', 'is_rbl_spam');
+            $table->renameColumn('isfp', 'is_fp');
+            $table->renameColumn('isfn', 'is_fn');
+            $table->renameColumn('spamwhitelisted', 'spam_whitelisted');
+            $table->renameColumn('spamblacklisted', 'spam_blacklisted');
+            $table->renameColumn('sascore', 'sa_score');
+            $table->renameColumn('spamreport', 'spam_report');
+            $table->renameColumn('virusinfected', 'virus_infected');
+            $table->renameColumn('nameinfected', 'name_infected');
+            $table->renameColumn('otherinfected', 'other_infected');
+            $table->renameColumn('ismcp', 'is_mcp');
+            $table->renameColumn('ishighmcp', 'is_highmcp');
+            $table->renameColumn('issamcp', 'is_sa_mcp');
+            $table->renameColumn('mcpwhitelisted', 'mcp_whitelisted');
+            $table->renameColumn('mcpblacklisted', 'mcp_blacklisted');
+            $table->renameColumn('mcpsascore', 'mcp_sa_score');
+            $table->renameColumn('mcpreport', 'mcp_report');
+            $table->tinyInteger('released')->nullable()->index();
+            $table->tinyInteger('deleted')->nullable()->index();
             DB::statement('ALTER TABLE `maillog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
             $table->index('timestamp');

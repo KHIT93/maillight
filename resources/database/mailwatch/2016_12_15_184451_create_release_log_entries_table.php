@@ -22,6 +22,8 @@ class CreateReleaseLogEntriesTable extends Migration
         });
         DB::statement('UPDATE `releaselog` SET `uuid` = uuid()');
         Schema::table('releaselog', function (Blueprint $table) {
+            $table->renameColumn('mailid', 'mail_id');
+            $table->renameColumn('userid', 'user_id');
             DB::statement('ALTER TABLE `releaselog` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
             $table->index('date');

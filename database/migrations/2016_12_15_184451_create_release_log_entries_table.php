@@ -16,8 +16,8 @@ class CreateReleaseLogEntriesTable extends Migration
         Schema::create('releaselog', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->date('date')->index();
-            $table->string('mailid'. 40);
-            $table->string('userid', 60);
+            $table->string('mail_id'. 40);
+            $table->string('user_id', 60);
         });
     }
 

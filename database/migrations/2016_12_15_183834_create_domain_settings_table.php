@@ -14,12 +14,12 @@ class CreateDomainSettingsTable extends Migration
     public function up()
     {
         Schema::create('domainsettings', function (Blueprint $table) {
-            $table->string('domainname', 50);
-            $table->string('domainuser', 45);
-            $table->integer('spamlevel')->default(5);
-            $table->integer('spamaction')->default(0);
-            $table->integer('highspamaction')->default(1);
-            $table->primary(['domainname', 'domainuser']);
+            $table->string('domain_name', 50);
+            $table->string('domain_user', 45);
+            $table->integer('spam_level')->default(5);
+            $table->integer('spam_action')->default(0);
+            $table->integer('highspam_action')->default(1);
+            $table->primary(['domain_name', 'domain_user']);
         });
     }
 

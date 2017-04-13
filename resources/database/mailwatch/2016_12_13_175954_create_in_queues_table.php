@@ -19,6 +19,7 @@ class CreateInQueuesTable extends Migration
         Schema::table('inq', function (Blueprint $table) {
             DB::statement('ALTER TABLE `inq` ENGINE = InnoDB');
             $table->uuid('uuid')->nullable();
+            $table->renameColumn('lastattempt', 'last_attempt')
         });
         DB::statement('UPDATE `inq` SET `uuid` = uuid()');
         Schema::table('inq', function (Blueprint $table) {

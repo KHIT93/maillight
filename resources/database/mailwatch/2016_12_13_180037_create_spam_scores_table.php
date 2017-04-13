@@ -28,6 +28,8 @@ class CreateSpamScoresTable extends Migration
         DB::statement('UPDATE `spamscores` SET `uuid` = uuid()');
         Schema::table('spamscores', function (Blueprint $table) {
             $table->dropPrimary('id');
+            $table->renameColumn('lowspamscore', 'low_spamscore');
+            $table->renameColumn('highspamscore', 'high_spamscore');
             DB::statement('ALTER TABLE `spamscores` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });

@@ -25,7 +25,7 @@ class CreateInQueuesTable extends Migration
             $table->text('size')->nullable();
             $table->text('priority')->nullable();
             $table->text('attempts')->nullable();
-            $table->text('lastattempt')->nullable();
+            $table->text('last_attempt')->nullable();
             $table->text('hostname')->nullable();
         });
     }

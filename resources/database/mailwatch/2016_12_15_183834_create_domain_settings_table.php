@@ -23,6 +23,11 @@ class CreateDomainSettingsTable extends Migration
         });
         DB::statement('UPDATE `domainsettings` SET `uuid` = uuid()');
         Schema::table('domainsettings', function (Blueprint $table) {
+            $table->renameColumn('domainname', 'domain_name');
+            $table->renameColumn('domainuser', 'domain_user');
+            $table->renameColumn('spamlevel', 'spam_level');
+            $table->renameColumn('spamaction', 'spam_action');
+            $table->renameColumn('highspamaction', 'highspam_action');
             DB::statement('ALTER TABLE `domainsettings` MODIFY `uuid` CHAR(36) NOT NULL');
             $table->primary('uuid');
         });

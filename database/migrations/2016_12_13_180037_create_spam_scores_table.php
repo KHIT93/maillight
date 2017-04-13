@@ -16,8 +16,8 @@ class CreateSpamScoresTable extends Migration
         Schema::create('spamscores', function (Blueprint $table) {
             $table->uuid('uuid')->primary();
             $table->integer('user')->unsigned();
-            $table->decimal('lowspamscore', 10, 0);
-            $table->decimal('highspamcore', 10, 0);
+            $table->decimal('low_spamscore', 10, 0);
+            $table->decimal('high_spamcore', 10, 0);
         });
     }
 
