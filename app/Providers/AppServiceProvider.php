@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
         if($this->app->isLocal())
         {
             $this->app->register(\Laravel\Tinker\TinkerServiceProvider::class);
-            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class,);
+            $this->app->register(\Clockwork\Support\Laravel\ClockworkServiceProvider::class);
             $this->app->register(\Torann\GeoIP\GeoIPServiceProvider::class);
         }
     }
