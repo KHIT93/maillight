@@ -27,3 +27,7 @@ Route::delete('/whitelist/destroy/{whitelist}', 'WhitelistsController@destroy');
 Route::get('/messages', 'MessagesController@list');
 
 Route::post('/tools/update-geoip', 'ToolsController@geoip');
+
+Route::post('/sa/release', 'SpamAssassinController@release');
+Route::delete('/sa/destroy', 'SpamAssassinController@destroy');
+Route::post('/sa/learn', 'SpamAssassinController@learn');

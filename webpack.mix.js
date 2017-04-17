@@ -13,6 +13,7 @@ const { mix } = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .js('resources/assets/js/messages.js', 'public/js')
+   .js('resources/assets/js/message_details.js', 'public/js')
    .js('resources/assets/js/lists.js', 'public/js')
    .js('resources/assets/js/reports.js', 'public/js')
    .js('resources/assets/js/reports_messages_by_date.js', 'public/js')

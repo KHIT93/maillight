@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "./";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 199);
+/******/ 	return __webpack_require__(__webpack_require__.s = 201);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -740,7 +740,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 140:
+/***/ 142:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -764,128 +764,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var app = new Vue({
     el: '#app',
     data: {
-        whitelist: {
-            search_key: '',
-            entries: []
-        },
-        blacklist: {
-            search_key: '',
-            entries: []
-        },
-        search_key: '',
-        show_entry_modal: false,
-        entry: {
-            from_address: '',
-            to_address: '',
-            to_domain: '',
-            list: ''
-        },
-        is_loading: true,
+        is_loading: false,
         js_enabled: true
     },
-    mounted: function mounted() {
-        this.init_lists();
-        this.is_loading = false;
-    },
     methods: {
-        init_lists: function init_lists() {
-            this.refresh_whitelist();
-            this.refresh_blacklist();
-        },
-        refresh_blacklist: function refresh_blacklist() {
-            this.$http.post('/api/blacklist/search?api_token=' + Laravel.api_token).then(function (response) {
-                if (response.status == 200) {
-                    app.blacklist.entries = response.data;
-                }
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        },
-        refresh_whitelist: function refresh_whitelist() {
-            this.$http.post('/api/whitelist/search?api_token=' + Laravel.api_token).then(function (response) {
-                if (response.status == 200) {
-                    app.whitelist.entries = response.data;
-                }
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-        },
-        search_blacklist: function search_blacklist() {
-            this.search_key = this.blacklist.search_key;
-            this.search_list('blacklist');
-        },
-        search_whitelist: function search_whitelist() {
-            this.search_key = this.whitelist.search_key;
-            this.search_list('whitelist');
-        },
-        search_list: function search_list(list) {
-            this.is_loading = true;
-            this.$http.post('/api/' + list + '/search?api_token=' + Laravel.api_token, {
-                query_key: this.search_key
-            }).then(function (response) {
-                if (response.status == 200) {
-                    app[list].entries = response.data;
-                }
-            }).catch(function (error) {
-                console.log(error.response);
-            });
-            this.is_loading = false;
-        },
-        delete_entry: function delete_entry(list, uuid) {
-            this.is_loading = true;
-            this.$http.delete('/api/' + list + '/destroy/' + uuid + '?api_token=' + Laravel.api_token).then(function (response) {
+        sa_release: function sa_release(message_uuid) {
+            /*this.$http.post('/api/sa/release?api_token='+Laravel.api_token, { message_uuid }).then(function(response){
                 console.log(response);
-            });
-            this.init_lists();
-            this.is_loading = false;
+            }).catch(function(error){
+                console.log(error.response);
+            });*/
+            console.log('recieved ' + message_uuid);
         },
-        show_modal: function show_modal() {
-            if (this.show_entry_modal) {
-                return 'is_active';
-            } else {
-                return '';
-            }
+        sa_remove: function sa_remove(message_uuid) {
+            console.log('recieved ' + message_uuid);
         },
-        toggle_modal: function toggle_modal() {
-            if (this.show_entry_modal) {
-                this.show_entry_modal = false;
-                this.reset_entry();
-            } else {
-                this.show_entry_modal = true;
-            }
-        },
-        reset_entry: function reset_entry() {
-            this.entry.from_address = '';
-            this.entry.to_address = '';
-            this.entry.to_domain = '';
-            this.entry.list = '';
-        },
-        submit_entry: function submit_entry() {
-            var list = '';
-            if (this.entry.list == 'blacklist' || this.entry.list == 'whitelist') {
-                list = this.entry.list;
-            }
-            if (list != '') {
-                this.$http.put('/api/' + list + '/create?api_token=' + Laravel.api_token, this.entry).then(function (response) {
-                    console.log(response);
-                    if (list == 'blacklist') {
-                        app.refresh_blacklist();
-                    }
-                    if (list == 'whiteist') {
-                        app.refresh_whitelist();
-                    }
-                    app.toggle_modal();
-                }).catch(function (error) {
-                    console.log(error.response);
-                    if (list == 'blacklist') {
-                        app.refresh_blacklist();
-                    }
-                    if (list == 'whiteist') {
-                        app.refresh_whitelist();
-                    }
-                    app.toggle_modal();
-                });
-            }
+        sa_learn: function sa_learn(message_uuid) {
+            console.log('recieved ' + message_uuid);
         }
     }
 });
@@ -1100,14 +995,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 199:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(140);
-
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1226,6 +1113,14 @@ module.exports = defaults;
 module.exports = function combineURLs(baseURL, relativeURL) {
   return baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '');
 };
+
+
+/***/ }),
+
+/***/ 201:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(142);
 
 
 /***/ }),

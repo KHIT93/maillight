@@ -6,6 +6,7 @@
   "/js/settings.js": "/js/settings.js",
   "/js/reports.js": "/js/reports.js",
   "/js/messages.js": "/js/messages.js",
+  "/js/message_details.js": "/js/message_details.js",
   "/js/login.js": "/js/login.js",
   "/js/lists.js": "/js/lists.js"
 }
