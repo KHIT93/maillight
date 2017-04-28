@@ -38,7 +38,7 @@ class MessagesController extends Controller
         $file = null;
         if($filename = $message->file_exists(true))
         {
-            $file = file_get_contents($filename;
+            $file = file_get_contents($filename);
         }
         return view('messages.read', compact('message', 'file'));
     }
