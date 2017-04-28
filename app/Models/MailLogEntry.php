@@ -175,4 +175,45 @@ class MailLogEntry extends Model
 			return gethostbyaddr($this->clientip);
 		});
 	}
+
+	public function file_exists($return_filepath = false)
+	{
+		$quarantine_dir = \MailLight\Support\ConfigHelper::getConfVar('QuarantineDir');
+        $date = $this->date->format('Ymd');
+        $filename = '';
+        switch(true)
+        {
+            case (file_exists($quarantine_dir.'/'.$date.'/nonspam/'.$this->mailwatch_id)):
+                $filename = $date.'/nonspam/'.$this->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/spam/'.$this->mailwatch_id)):
+                $filename = $date.'/spam/'.$this->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/mcp/'.$this->mailwatch_id)):
+                $filename = $date.'/mcp/'.$this->mailwatch_id;
+                break;
+            case (file_exists($quarantine_dir.'/'.$date.'/'.$this->mailwatch_id.'/message')):
+                $filename = $date.'/'.$this->mailwatch_id.'/message';
+                break;
+        }
+        return ($filename == '') ? false: (($return_filepath) ? $quarantine_dir.'/'.$filename : true);
+	}
+
+	public function release()
+	{
+		//If the message does not exist in the filesystem, return false
+		if(!$this->file_exists())
+		{
+			return false;
+		}
+
+		//Otherwise, release it
+
+		//Update the model to indicate that it has been released
+		$this->is_released = true;
+		$this->save();
+
+		return $this;
+
+	}
 }

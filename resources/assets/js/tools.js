@@ -30,5 +30,15 @@ const app = new Vue({
                 app.is_loading = false;
             });
         },
+        update_sa_rules() {
+            this.is_loading = true;
+            this.$http.post('/api/sa/update-rules?api_token='+Laravel.api_token).then(function(response){
+                console.log(response);
+                app.is_loading = false;
+            }).catch(function(response){
+                console.log(response);
+                app.is_loading = false;
+            });
+        },
     }
 });

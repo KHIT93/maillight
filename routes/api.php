@@ -31,3 +31,4 @@ Route::post('/tools/update-geoip', 'ToolsController@geoip');
 Route::post('/sa/release', 'SpamAssassinController@release');
 Route::delete('/sa/destroy', 'SpamAssassinController@destroy');
 Route::post('/sa/learn', 'SpamAssassinController@learn');
+Route::post('/sa/update-rules', 'SpamAssassinRulesController@update');
