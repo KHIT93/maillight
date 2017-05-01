@@ -93,24 +93,24 @@ class SpamAssassinController extends Controller
 		{
 			case 'ham':
 				//Learn the message as not being harmful
-				exec('sa-learn --ham --file '.$message->file_exists(true).' 2>&1' &$sa_learn_output, &$sa_learn_status);
+				exec('sa-learn --ham --file '.$message->file_exists(true).' 2>&1', $sa_learn_output, $sa_learn_status);
                 $message->is_fp = 1;
 			break;
-			case: 'spam':
+			case 'spam':
 				//Learn the message as spam
-				exec('sa-learn --spam --file '.$message->file_exists(true).' 2>&1' &$sa_learn_output, &$sa_learn_status);
+				exec('sa-learn --spam --file '.$message->file_exists(true).' 2>&1', $sa_learn_output, $sa_learn_status);
                 $message->is_fn = 1;
 			break;
-			case: 'report':
+			case 'report':
 				//Learn the message as spam and report it
-				exec('sa-learn --spam --file '.$message->file_exists(true).' 2>&1' &$sa_learn_output, &$sa_learn_status);
-                exec(config('mail.spamassassin.executable').'spamassassin -p '.config('mail.mailscanner.config_dir').config('mail.spamassassin.preferences').' -r '.$message->file_exists(true).' 2>&1', &$sa_output, &$sa_status);
+				exec('sa-learn --spam --file '.$message->file_exists(true).' 2>&1', $sa_learn_output, $sa_learn_status);
+                exec(config('mail.spamassassin.executable').'spamassassin -p '.config('mail.mailscanner.config_dir').config('mail.spamassassin.preferences').' -r '.$message->file_exists(true).' 2>&1', $sa_output, $sa_status);
                 $message->is_fn = 1;
             break;
-			case: 'revoke':
+			case 'revoke':
 				//Learn the message as clean and release it
-				exec('sa-learn --ham --file '.$message->file_exists(true).' 2>&1' &$sa_learn_output, &$sa_learn_status);
-                exec(config('mail.spamassassin.executable').'spamassassin -p '.config('mail.mailscanner.config_dir').config('mail.spamassassin.preferences').' -k '.$message->file_exists(true).' 2>&1', &$sa_output, &$sa_status);
+				exec('sa-learn --ham --file '.$message->file_exists(true).' 2>&1', $sa_learn_output, $sa_learn_status);
+                exec(config('mail.spamassassin.executable').'spamassassin -p '.config('mail.mailscanner.config_dir').config('mail.spamassassin.preferences').' -k '.$message->file_exists(true).' 2>&1', $sa_output, $sa_status);
                 $message->is_fp = 1;
             break;
 		}
