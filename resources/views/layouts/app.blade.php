@@ -34,15 +34,15 @@
         <nav class="nav has-shadow">
           <div class="container">
                 <div class="nav-left">
-                    <a href="/" class="nav-item is-tab is-active">Dashboard</a>
-                    <a href="/messages" class="nav-item is-tab">Recent messages</a>
-                    <a href="/lists" class="nav-item is-tab">Lists</a>
-                    <a href="/quarantine" class="nav-item is-tab">Quarantine</a>
-                    <a href="/reports" class="nav-item is-tab">Reports</a>
-                    <a href="/tools" class="nav-item is-tab">Tools</a>
-                    <a href="/systeminfo" class="nav-item is-tab">System information</a>
-                    <a href="/settings" class="nav-item is-tab">Server settings</a>
-                    <a href="/logout" class="nav-item is-tab">Logout</a>
+                    <a href="{{route('home')}}" class="nav-item is-tab @if(Route::is('home')) is-active @endif">Dashboard</a>
+                    <a href="{{route('messages')}}" class="nav-item is-tab @if(Route::is('messages')) is-active @endif">Recent messages</a>
+                    <a href="{{route('lists')}}" class="nav-item is-tab @if(Route::is('lists')) is-active @endif">Lists</a>
+                    <a href="{{route('quarantine')}}" class="nav-item is-tab @if(Route::is('quarantine')) is-active @endif">Quarantine</a>
+                    <a href="{{route('reports')}}" class="nav-item is-tab @if(Route::is('reports')) is-active @endif">Reports</a>
+                    <a href="{{route('tools')}}" class="nav-item is-tab @if(Route::is('tools')) is-active @endif">Tools</a>
+                    <a href="{{route('systeminfo')}}" class="nav-item is-tab @if(Route::is('systeminfo')) is-active @endif">System information</a>
+                    <a href="{{route('settings')}}" class="nav-item is-tab @if(Route::is('settings')) is-active @endif">Server settings</a>
+                    <a href="{{route('logout')}}" class="nav-item is-tab">Logout</a>
                 </div>
             </div>
         </nav>
