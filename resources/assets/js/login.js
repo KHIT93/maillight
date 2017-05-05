@@ -17,20 +17,38 @@ const app = new Vue({
     el: '#app',
     data: {
         is_loading: false,
+        loading: false,
         js_enabled: true,
+        loader: '',
+
         user: {
             email: '',
             password: ''
         },
+        show_dialog: true,
         error: null
     },
-    computed: {
-        loading: function() {
-            if(this.is_loading)
-            {
-                return 'disabled is-loading';
-            }
-            return '';
+    methods: {
+        login() {
+            this.$http.post('/login', this.user).then(function(response){
+                console.log(response);
+                app.get_redirect(response.data);
+            })
+            .catch(function(error){
+                app.error = error.response.data;
+                app.loading = false;
+                console.log(error.response);
+            });
+        },
+        get_redirect(userdata) {
+            this.$http.post('/api/login/redirect?api_token='+userdata.api_token).then(function(response){
+                console.log(response.data);
+                window.location.href = response.data.path;
+            })
+            .catch(function(error){
+                console.log(error.response);
+                app.loading = false;
+            });
         }
     }
 });

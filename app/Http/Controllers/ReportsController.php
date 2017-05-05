@@ -3,6 +3,7 @@
 namespace MailLight\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use MailLight\Models\MailLogEntry;
 
 class ReportsController extends Controller
@@ -141,7 +142,16 @@ class ReportsController extends Controller
     			unset($filters[$key]);
     		}
     	}
-    	return ['filter_options' =>array_diff_key($filters, array_keys($active_filters)), 'active_filters' => $active_filters];
+        $remaining_filters = array_diff_key($filters, array_keys($active_filters));
+        $filter_options = [];
+        foreach ($remaining_filters as $key => $value) {
+            $filter_options[] = [
+                'text' => $value,
+                'value' => $key
+            ];
+        }
+        //return ['filter_options' => array_diff_key($filters, array_keys($active_filters)), 'active_filters' => $active_filters];
+    	return ['filter_options' => $filter_options, 'active_filters' => $active_filters];
     }
 
     /**

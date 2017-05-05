@@ -1,77 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
+@section('navigation')
+@endsection
 
-        <!-- CSRF Token -->
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-
-        <title>Login - {{ config('app.name', 'Laravel') }}</title>
-
-        <!-- Styles -->
-        <link href="/css/app.css" rel="stylesheet">
-
-        <!-- Scripts -->
-        <script>
-            window.Laravel = <?php echo json_encode([
-                'csrfToken' => csrf_token(),
-            ]); ?>
-        </script>
-    </head>
-    <body>
-        <div id="app">
-            <section class="hero is-fullheight is-dark is-bold">
-                <div class="hero-body">
-                    <div class="container">
-                        <div class="columns is-vcentered">
-                            <div class="column is-4 is-offset-4">
-                                <h1 class="title">
-                                    Login
-                                </h1>
-                                <div class="box">
-                                    <form role="form" method="POST" action="{{ url('/login') }}" @submit="is_loading=true">
-                                        {{ csrf_field() }}
-                                        <div class="notification is-danger" v-if="error">
-                                            <span v-text="error.response.data.email"/>
-                                        </div>
-                                        <label class="label">Email</label>
-                                        <p class="control">
-                                            <input v-model="user.email" class="input{{ $errors->has('email') ? ' is-danger' : '' }}" type="email" placeholder="john@example.com" name="email" value="{{ old('email') }}" required autofocus>
-                                            @if ($errors->has('email'))
-                                                <span class="help">
-                                                    <strong>{{ $errors->first('email') }}</strong>
-                                                </span>
-                                            @endif
-                                        </p>
-                                        <label class="label">Password</label>
-                                        <p class="control">
-                                            <input v-model="user.password" class="input{{ $errors->has('password') ? ' is-danger' : '' }}" type="password" placeholder="Password" name="password" value="{{ old('password') }}">
-                                            @if ($errors->has('password'))
-                                                <span class="help">
-                                                    <strong>{{ $errors->first('password') }}</strong>
-                                                </span>
-                                            @endif
-                                        </p>
-                                        <hr>
-                                        <p class="control">
-                                            <button type="submit" class="button is-primary" :class="loading">
-                                                Login
-                                            </button>
-                                            <a class="button is-default" v-if="!is_loading" href="{{ url('/password/reset') }}">
-                                                Forgot Your Password?
-                                            </a>
-                                        </p>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <!-- Scripts -->
-        <script async src="/js/login.js"></script>
-    </body>
-</html>
+@section('content')
+<v-dialog v-model="show_dialog" persistent width="600">
+    <v-card>
+        <v-card-row>
+            <v-card-title>Login</v-card-title>
+        </v-card-row>
+        <v-card-row>
+            <v-card-text>
+                <form role="form" method="POST" action="{{ url('/login') }}" @submit.prevent="login">
+                    {{ csrf_field() }}
+                    <v-alert error v-bind:value="error">
+                        @{{ error }}
+                    </v-alert>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="username"
+                            label="Username"
+                            required
+                            v-model="user.email"
+                            type="email"
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="password"
+                            label="Password"
+                            required
+                            v-model="user.password"
+                            type="password"
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-btn
+                        info
+                        v-bind:loading="loading"
+                        v-on:click.native="loader = 'loading'"
+                        v-bind:disabled="loading"
+                        type="submit"
+                        @click.native="loading = true"
+                        >
+                        Log in
+                        <span slot="loader" class="custom-loader">
+                          <v-icon>cached</v-icon>
+                        </span>
+                    </v-btn>
+                    <v-btn class="blue--text darken-1" flat="flat" href="{{ url('/password/reset') }}">Forgot Password?</v-btn>
+                </form>
+            </v-card-text>
+        </v-card-row>
+        <v-card-row>
+            <v-card-text>Please note that this application depends on JavaScript, so it is required that this is enabled in your web browser</v-card-text>
+        </v-card-row>
+    </v-card>
+</v-dialog>
+@endsection
+@section('scripts')
+<script async src="/js/login.js"></script>
+@endsection

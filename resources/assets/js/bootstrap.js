@@ -10,7 +10,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueSelect from 'vue-select';
+import Vuetify from 'vuetify'
 window.Vue = Vue;
+Vue.use(Vuetify);
 Vue.component('v-select', VueSelect.VueSelect);
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of

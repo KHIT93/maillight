@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="columns">
-        <div class="column">
-            <table class="table">
+<v-container>
+    <v-row>
+        <v-col xs12>
+            <table class="datatable table">
                 <thead>
                     <tr>
                         <th>Attribute</th>
@@ -42,5 +42,7 @@
                     </tr>
                 </tbody>
             </table>
-</div>
+        </v-col>
+    </v-row>
+</v-container>
 @endsection

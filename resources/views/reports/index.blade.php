@@ -1,112 +1,165 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-	<div class="columns">
-		<div class="column is-5">
-			<h3>Add filter</h3>
-			<label class="label">Field</label>
-			<p class="control">
-			  <span class="select">
-			    <select v-model="new_filter.field">
-			    	<template v-for="(value, key) in filter_options">
-			    	<option :value="key">@{{ value }}</option>
-			    	</template>
-			    </select>
-			  </span>
-			</p>
-			<label class="label">Operator</label>
-			<p class="control">
-			  <span class="select">
-		    		<select v-model="new_filter.operator">
-				 		<option value="=">is equal to</option>
-				 		<option value="<>">is not equal to</option>
-				 		<option value=">">is greater than</option>
-				 		<option value=">=">is greater than or equal to</option>
-				 		<option value="<">is less than</option>
-				 		<option value="<=">is less than or equal to</option>
-				 		<option value="LIKE">contains</option>
-				 		<option value="NOT LIKE">does not contain</option>
-				 		<option value="REGEXP">matches the regular expression</option>
-				 		<option value="NOT REGEXP">does not match the regular expression</option>
-				 		<option value="IS NULL">is null</option>
-				 		<option value="IS NOT NULL">is not null</option>
-					</select>
-			  </span>
-			</p>
-			<label class="label">Value</label>
-			<div class="columns">
-				<div class="column is-9">
-					<p class="control">
-				  		<input class="input" type="text" v-model="new_filter.value">
-					</p>
-				</div>
-				<div class="column">
-					<p class="control has-text-right">
-						<button class="button is-primary" @click="apply_filter()">Add</button>
-					</p>
-				</div>
-			</div>
-		</div>
-		<div class="column is-one-third">
-			<h3>Active filters</h3>
-			<div class="columns" v-for="filter in active_filters">
-				<div class="column is-9">
-					@{{ filter.field }} @{{ filter.operator }} @{{ filter.value }}
-				</div>
-				<div class="column">
-					<button class="button is-danger is-small" @click="remove_filter(filter)">Remove</button>
-				</div>
-			</div>
-		</div>
-		<div class="column">
-			<div class="columns">
-				<div class="column">
-					<p class="has-text-left"><strong>Oldest record:</strong></p>
-				</div>
-				<div class="column">
-					<p class="has-text-right">@{{ statistics.old }}</p>
-				</div>
-			</div>
-			<div class="columns">
-				<div class="column">
-					<p class="has-text-left"><strong>Newest record:</strong></p>
-				</div>
-				<div class="column">
-					<p class="has-text-right">@{{ statistics.new }}</p>
-				</div>
-			</div>
-			<div class="columns">
-				<div class="column">
-					<p class="has-text-left"><strong>Message count:</strong></p>
-				</div>
-				<div class="column">
-					<p class="has-text-right">@{{ statistics.count }}</p>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+<v-container>
+	<v-row>
+		<v-col sm5 xs12>
+			<h5>Add Filter</h5>
+			<v-container fluid>
+				<v-row>
+					<v-col xs3>
+						<v-subheader v-text="'Field'" />
+					</v-col>
+					<v-col xs9>
+						<v-select
+							v-bind:items="filter_options"
+							v-model="new_filter.field"
+							label="-- Select --"
+							light
+							single-line
+							auto
+					  />
+					</v-col>
+				</v-row>
+				<v-row>
+					<v-col xs3>
+						<v-subheader v-text="'Operator'" />
+					</v-col>
+					<v-col xs9>
+						<v-select
+							v-bind:items="operators"
+							v-model="new_filter.operator"
+							label="-- Select --"
+							light
+							single-line
+							auto
+					  />
+					</v-col>
+				</v-row>
+				<v-row row>
+					<v-col xs3>
+					  <v-subheader>Value</v-subheader>
+					</v-col>
+					<v-col xs6>
+					  <v-text-field
+						name="value"
+						label="Value"
+						v-model="new_filter.value"
+					  />
+					</v-col>
+					<v-col xs3>
+						<v-btn primary dark @click.native="apply_filter">Add Entry</v-btn>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-col>
+		<v-col sm4 xs12>
+			<h5>Active Filters</h5>
+			<template v-for="filter in active_filters">
+				<v-row>
+					<v-col xs8>
+						<div tabindex="-1" class="input-group input-group--light">
+							<div class="input-group__input">
+								@{{ filter.field }} @{{ filter.operator }} @{{ filter.value }}
+							</div>
+							<div class="input-group__details">
+								<div class="input-group__messages"></div>
+							</div>
+						</div>
+					</v-col>
+					<v-col xs3>
+						<v-btn error dark @click.native="remove_filter(filter)">Remove</v-btn>
+					</v-col>
+				</v-row>
+			</template>
+		</v-col>
+		<v-col sm3 xs12>
+			<v-row>
+				<v-col xs6>
+					<strong>Oldest record:</strong>
+				</v-col>
+				<v-col xs6>
+					@{{ statistics.old }}
+				</v-col>
+			</v-row>
+			<v-row>
+				<v-col xs6>
+					<strong>Newest record:</strong>
+				</v-col>
+				<v-col xs6>
+					@{{ statistics.new }}
+				</v-col>
+			</v-row>
+			<v-row>
+				<v-col xs6>
+					<strong>Message count:</strong>
+				</v-col>
+				<v-col xs6>
+					@{{ statistics.count }}
+				</v-col>
+			</v-row>
+		</v-col>
+	</v-row>
+</v-container>
 @endsection
 
 @section('after_content')
-<div class="container">
-<div class="columns">
-	<div class="column">
-		<aside class="menu">
-			<p class="menu-label">
-		    	Available reports
-		  	</p>
-		  	<ul class="menu-list">
-			    <li><a href="/reports/messages">Message listings</a></li>
-			    <li><a href="/reports/messages-by-date">Total messages by date</a></li>
-			    <li v-if="false"><a href="/reports/mail-relays">Top mail relays</a></li>
-			    <li><a href="/reports/audit">Audit log</a></li>
-		  	</ul>
-		</aside>
-	</div>
-</div>
-</div>
+<v-container>
+	<v-row>
+		<v-col xs12>
+			<v-list two-line subheader>
+                <v-subheader inset>Available reports</v-subheader>
+                <v-list-item>
+                    <v-list-tile avatar href="/reports/messages">
+                        <v-list-tile-avatar>
+                            <v-icon class=""></v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Message listings</v-list-tile-title>
+                            <v-list-tile-sub-title>See a list of messages that match your filtered results</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                  </v-list-tile>
+                </v-list-item>
+                <v-divider inset></v-divider>
+                <v-list-item>
+                    <v-list-tile avatar href="/reports/messages-by-date">
+                        <v-list-tile-avatar>
+                            <v-icon class=""></v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Total messages by date</v-list-tile-title>
+                            <v-list-tile-sub-title>See some statistics about the messages in the filtered results</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                  </v-list-tile>
+                </v-list-item>
+                <v-divider inset></v-divider>
+                <v-list-item>
+                    <v-list-tile avatar href="/reports/mail-relays">
+                        <v-list-tile-avatar>
+                            <v-icon class=""></v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Top mail relays</v-list-tile-title>
+                            <v-list-tile-sub-title>See where email was coming from and heading to, based on the filtered results</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                  </v-list-tile>
+                </v-list-item>
+				<v-divider inset></v-divider>
+				<v-list-item>
+                    <v-list-tile avatar href="/reports/audit">
+                        <v-list-tile-avatar>
+                            <v-icon class=""></v-icon>
+                        </v-list-tile-avatar>
+                        <v-list-tile-content>
+                            <v-list-tile-title>Audit log</v-list-tile-title>
+                            <v-list-tile-sub-title>View the audit log to see what users have been doing in the application. This is not affected by the filtering applied</v-list-tile-sub-title>
+                        </v-list-tile-content>
+                  </v-list-tile>
+                </v-list-item>
+            </v-list>
+		</v-col>
+	</v-row>
+</v-container>
 @endsection
 
 @section('scripts')

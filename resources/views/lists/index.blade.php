@@ -1,97 +1,134 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container is-fluid">
-	<a class="button" @click.prevent="toggle_modal()">Add entry</a>
-	<div class="modal is-active" v-show="show_entry_modal">
-		<div class="modal-background"></div>
-		<div class="modal-card">
-			<header class="modal-card-head">
-				<p class="modal-card-title">Modal title</p>
-				<button class="delete" @click.prevent="toggle_modal()"></button>
-			</header>
-			<section class="modal-card-body">
-				<label class="label">List</label>
-				<p class="control">
-			  		<span class="select">
-				    	<select v-model="entry.list">
-				    		<option value="">-- Select --</option>
-				      		<option value="blacklist">Blacklist</option>
-				      		<option value="whitelist">Whitelist</option>
-				    	</select>
-			  		</span>
-				</p>
-				<label class="label">From</label>
-				<p class="control">
-			  		<input class="input" type="text" placeholder="john@example.com" v-model="entry.from_address">
-				</p>
-				<label class="label">To</label>
-				<p class="control has-addons">
-			  		<input class="input" type="text" placeholder="john" v-model="entry.to_address">
-			  		<a class="button" disabled>@</a>
-			  		<input class="input" type="text" placeholder="example.com" v-model="entry.to_domain">
-				</p>
-			</section>
-			<footer class="modal-card-foot">
-				<a class="button is-primary" @click.prevent="submit_entry()">Save changes</a>
-				<a class="button" @click.prevent="toggle_modal()">Cancel</a>
-			</footer>
-		</div>
-	</div>
-	<hr>
-	<div class="columns">
-		<div class="column is-half">
-			<h2>Whitelisted</h2>
-			<p class="control has-addons">
-		  		<input class="input is-expanded" type="text" placeholder="Search..." v-model="whitelist.search_key">
-			  	<a class="button is-info" @click.prevent="search_whitelist()">
-			    	Search
-			  	</a>
-			</p>
-			<table class="table is-narrow">
-				<thead>
-					<tr>
-						<th>From</th>
-						<th>To</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="entry in whitelist.entries">
-						<td>@{{ entry.from_address }}</td>
-						<td>@{{ entry.to_address }}</td>
-						<td><a class="button is-danger is-small" :href="'/whitelist/destroy/'+entry.uuid" @click.prevent="delete_entry('whitelist', entry.uuid)">Delete</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="column is-half">
-			<h2>Blacklisted</h2>
-			<p class="control has-addons">
-		  		<input class="input is-expanded" type="text" placeholder="Search..." v-model="blacklist.search_key">
-			  	<a class="button is-info" @click.prevent="search_blacklist()">
-			    	Search
-			  	</a>
-			</p>
-			<table class="table is-narrow">
-				<thead>
-					<tr>
-						<th>Fromt</th>
-						<th>To</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="entry in blacklist.entries">
-						<td>@{{ entry.from_address }}</td>
-						<td>@{{ entry.to_address }}</td>
-						<td><a class="button is-danger is-small" :href="'/blacklist/destroy/'+entry.uuid" @click.prevent="delete_entry('blacklist', entry.uuid)">Delete</a></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
+<v-container>
+	<v-dialog v-model="show_entry_modal" persistent width="600">
+  		<v-btn primary dark slot="activator">Add Entry</v-btn>
+	  	<v-card>
+	    	<v-card-row>
+	      		<v-card-title>Add Listing Entry</v-card-title>
+	    	</v-card-row>
+	    	<v-card-row>
+	      		<v-card-text>
+					<v-container fluid>
+						<v-row>
+							<v-col xs3>
+				          		<v-subheader v-text="'List'" />
+					        </v-col>
+					        <v-col xs9>
+					          	<v-select
+					            	v-bind:items="list_types"
+					            	v-model="entry.list"
+					            	label="-- Select --"
+					            	light
+					            	single-line
+					            	auto
+					          />
+					        </v-col>
+						</v-row>
+						<v-row row>
+					        <v-col xs3>
+					          <v-subheader>From</v-subheader>
+					        </v-col>
+					        <v-col xs9>
+					          <v-text-field
+					            name="from_address"
+					            label="From"
+								v-model="entry.from_address"
+					          />
+					        </v-col>
+				      	</v-row>
+						<v-row row>
+					        <v-col xs3>
+					          <v-subheader>To</v-subheader>
+					        </v-col>
+					        <v-col xs9>
+					          <v-text-field
+					            name="to_address"
+								label="To"
+								v-model="entry.to_address"
+					          />
+					        </v-col>
+				      	</v-row>
+					</v-container>
+				</v-card-text>
+	    	</v-card-row>
+		    <v-card-row actions>
+	      		<v-btn class="green--text darken-1" flat="flat" @click.native="toggle_modal">Cancel</v-btn>
+	      		<v-btn class="green--text darken-1" flat="flat" @click.native="submit_entry">Save</v-btn>
+		    </v-card-row>
+	  	</v-card>
+	</v-dialog>
+</v-container>
+<hr>
+<v-container fluid>
+	<v-row>
+		<v-col sm6 xs12>
+			<v-card>
+				<v-card-title>
+				    Whitelisted
+				    <v-spacer></v-spacer>
+				    <v-text-field
+			      		append-icon="search"
+				      	label="Search"
+				      	single-line
+				      	hide-details
+				      	v-model="whitelist.search_key"
+			    	></v-text-field>
+			  	</v-card-title>
+				<v-data-table
+			        v-bind:headers="headers"
+			        v-model="whitelist.entries"
+					v-bind:search="whitelist.search_key"
+					rows-per-page="25"
+			        class="elevation-2">
+			        <template slot="headers" scope="props">
+			            <span>
+			                @{{ props.item.value }}
+			            </span>
+			        </template>
+			        <template slot="items" scope="props">
+			            <td class="text-xs-right">@{{ props.item.from_address }}</td>
+			            <td class="text-xs-right">@{{ props.item.to_address }}</td>
+			            <td class="text-xs-right"><a href="#" class="btn btn--flat btn--light btn--raised error error--text" @click.prevent="delete_entry('whitelist', props.item.uuid)">Delete</a></td>
+			      </template>
+			    </v-data-table>
+			</v-card>
+		</v-col>
+		<v-col sm6 xs12>
+			<v-card>
+				<v-card-title>
+				    Blacklisted
+				    <v-spacer></v-spacer>
+				    <v-text-field
+			      		append-icon="search"
+				      	label="Search"
+				      	single-line
+				      	hide-details
+				      	v-model="blacklist.search_key"
+			    	></v-text-field>
+			  	</v-card-title>
+				<v-data-table
+			        v-bind:headers="headers"
+			        v-model="blacklist.entries"
+					v-bind:search="blacklist.search_key"
+					rows-per-page="25"
+			        class="elevation-2">
+			        <template slot="headers" scope="props">
+			            <span>
+			                @{{ props.item.value }}
+			            </span>
+			        </template>
+			        <template slot="items" scope="props">
+			            <td class="text-xs-right">@{{ props.item.from_address }}</td>
+			            <td class="text-xs-right">@{{ props.item.to_address }}</td>
+			            <td class="text-xs-right"><a href="#" class="btn btn--flat btn--light btn--raised error error--text" @click.prevent="delete_entry('blacklist', props.item.uuid)">Delete</a></td>
+			      </template>
+			    </v-data-table>
+			</v-card>
+		</v-col>
+	</v-row>
+</v-container>
 @endsection
 @section('scripts')
 <script async src="/js/lists.js"></script>
