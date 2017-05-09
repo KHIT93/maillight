@@ -17,7 +17,7 @@ class BlacklistsController extends Controller
      */
     public function search(Request $request)
     {
-        return ($request->has('query_key')) ? BlacklistEntry::where('from_address', 'like', '%'.$request->get('query_key').'%')->orWhere('to_address', 'like', '%'.$request->get('query_key').'%')->orWhere('to_domain', 'like', '%'.$request->get('query_key').'%')->get(): BlacklistEntry::orderBy('mailwatch_id', 'desc')->take(50)->get();
+        return ($request->has('query_key')) ? BlacklistEntry::where('from_address', 'like', '%'.$request->get('query_key').'%')->orWhere('to_address', 'like', '%'.$request->get('query_key').'%')->orWhere('to_domain', 'like', '%'.$request->get('query_key').'%')->get(): BlacklistEntry::orderBy('mailwatch_id', 'desc')->get();
     }
 
     /**
@@ -28,7 +28,9 @@ class BlacklistsController extends Controller
      */
     public function store(Request $request)
     {
-        return BlacklistEntry::create($request->all());
+        $data = $request->all();
+        $data['to_domain'] = (count(explode('@', $data['to_address'])) == 2) ? explode('@', $data['to_address'])[1] : $data['to_address'];
+        return BlacklistEntry::create($data);
     }
 
     /**

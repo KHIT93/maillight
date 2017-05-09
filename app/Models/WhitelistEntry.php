@@ -9,7 +9,7 @@ class WhitelistEntry extends Model
 	use UuidForKey;
     protected $table = 'whitelist';
     protected $primaryKey = 'uuid';
-    protected $guarded = ['uuid'];
+    protected $fillable= ['to_address', 'to_domain', 'from_address'];
     public $incrementing = false;
 
     /**

@@ -241,7 +241,7 @@ return [
         /*
          * Package Service Providers...
          */
-        
+        Laracasts\Flash\FlashServiceProvider::class,
         /*
          * Application Service Providers...
          */

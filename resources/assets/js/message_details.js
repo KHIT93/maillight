@@ -18,6 +18,13 @@ const app = new Vue({
     data: {
         is_loading: false,
         js_enabled: true,
+        sa_options: [
+            {value: 'ham', text: 'The message is clean'},
+            {value: 'spam', text: 'The message is spam'},
+            {value: 'report', text: 'Report and mark as spam'},
+            {value: 'revoke', text: 'Report as clean and release'},
+        ],
+        sa_action: null
     },
     methods: {
         sa_release(message_uuid) {
@@ -32,6 +39,7 @@ const app = new Vue({
             console.log('recieved '+message_uuid);
         },
         sa_learn(message_uuid) {
+            //Use sa_action to send with request for sa-learn
             console.log('recieved '+message_uuid);
         }
     }

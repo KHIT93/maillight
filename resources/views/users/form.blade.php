@@ -1,48 +1,95 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Create new user</h2>
-    <form name="user_form" role="form" action="{{($user->uuid) ? '/users/'.$user->uuid.'/update':'/users/create'}}" method="POST">
-        {!! method_field((($user->uuid) ? 'PATCH':'PUT')) !!}
-        {!! csrf_field() !!}
-        <label class="label">Name</label>
-        <p class="control">
-            <input class="input" type="text" placeholder="John Doe" value="{{$user->name}}" name="name" required>
-        </p>
-        <label class="label">Email</label>
-        <p class="control">
-            <input class="input" type="email" placeholder="john@example.com" value="{{$user->email}}" name="email" required>
-        </p>
-        <label class="label">Password</label>
-        <p class="control">
-            <input class="input" type="password" name="password" required>
-        </p>
-        <label class="label">Confirm Password</label>
-        <p class="control">
-            <input class="input" type="password" name="confirm_password" required>
-        </p>
+<v-container>
+        <h4>{{ ($user->uuid) ? 'Edit '.$user->name:'Create new user' }}</h4>
+        <form name="user_form" role="form" action="{{($user->uuid) ? '/users/'.$user->uuid.'/update':'/users/create'}}" method="POST">
+            {!! method_field((($user->uuid) ? 'PATCH':'PUT')) !!}
+            {!! csrf_field() !!}
+            <v-row row>
+                <v-col xs3>
+                  <v-subheader>Name</v-subheader>
+                </v-col>
+                <v-col xs9>
+                  <v-text-field
+                    name="name"
+                    label="Name"
+                    required
+                    value="{{$user->name}}"
+                  />
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3>
+                  <v-subheader>Email</v-subheader>
+                </v-col>
+                <v-col xs9>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    required
+                    value="{{$user->email}}"
+                    type="email"
+                  />
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3>
+                  <v-subheader>Password</v-subheader>
+                </v-col>
+                <v-col xs9>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    @if(!$user->uuid) required @endif
+                    type="password"
+                  />
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3>
+                  <v-subheader>Confirm Password</v-subheader>
+                </v-col>
+                <v-col xs9>
+                  <v-text-field
+                    name="confirm_password"
+                    label="Confirm Password"
+                    @if(!$user->uuid) required @endif
+                    type="password"
+                  />
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3>
+                </v-col>
+                <v-col xs9>
+                    <v-checkbox label="Send Daily reports" v-model="report_checked" primary value="1" light {{($user->quarantine_report) ? 'checked':''}}/>
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3>
+                  <v-subheader>Report Recipient</v-subheader>
+                </v-col>
+                <v-col xs9>
+                  <v-text-field
+                    name="quarantine_rcpt"
+                    label="Confirm Password"
+                    type="email"
+                    value="{{$user->quarantine_rcpt}}"
+                  />
+                </v-col>
+            </v-row>
+            <v-row row>
+                <v-col xs3></v-col>
+                <v-col xs9>
+                    <v-btn primary type="submit">Save</v-btn>
+                    <a href="/users/create" class="btn btn--light btn--flat">Cancel</a>
+                </v-col>
+            </v-row>
+        </form>
+</v-container>
+@endsection
 
-        <!-- Role selection goes here -->
-        <label class="label">Daily Report</label>
-        <p class="control">
-            <label class="checkbox">
-                <input type="checkbox" value="1" name="quarantine_report" {{($user->quarantine_report) ? 'checked':''}}>
-                Send daily reports
-            </label>
-        </p>
-        <label class="label">Report Recipient</label>
-        <p class="control">
-            <input class="input" type="email" placeholder="jane@example.com" value="{{$user->quarantine_rcpt}}" name="quarantine_rcpt">
-        </p>
-        <div class="control is-grouped">
-            <p class="control">
-              <button class="button is-primary" type="submit">{{($user->uuid) ? 'Update user':'Create user'}}</button>
-            </p>
-            <p class="control">
-              <a href="/users" class="button is-link">Cancel</a>
-            </p>
-        </div>
-    </form>
-</div>
+@section('scripts')
+<script async src="/js/user_form.js"></script>
 @endsection

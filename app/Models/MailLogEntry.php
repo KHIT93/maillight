@@ -10,7 +10,9 @@ class MailLogEntry extends Model
     protected $table = 'maillog';
     protected $primaryKey = 'uuid';
     protected $guarded = ['uuid'];
+	protected $appends = array('selected');
     public $incrementing = false;
+	public $selected = false;
 
 	protected $dates = [
 		'date'
@@ -144,11 +146,11 @@ class MailLogEntry extends Model
             }
         }
 
-        foreach (array('cached', 'score=', 'required', 'autolearn=') as $val) {
+        /*foreach (array('cached', 'score=', 'required', 'autolearn=') as $val) {
             if (preg_match("/$val/", $sa_rules[0])) {
                 array_shift($sa_rules);
             }
-        }
+        }*/
         return view('partials.spamreport', compact('report'));
     }
 
@@ -216,4 +218,9 @@ class MailLogEntry extends Model
 		return $this;
 
 	}
+
+	public function getSelectedAttribute()
+    {
+        return $this->selected;
+    }
 }

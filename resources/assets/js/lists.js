@@ -30,9 +30,17 @@ const app = new Vue({
     	entry: {
     		from_address: '',
     		to_address: '',
-    		to_domain: '',
     		list: ''
     	},
+        list_types: [
+            { text: "Blacklist", value: "blacklist"},
+            { text: "Whitelist", value: "whitelist"},
+        ],
+        headers: [
+            {value: 'From'},
+            {value: 'To'},
+            {value: 'Task'}
+        ],
         is_loading: true,
         js_enabled: true
     },
@@ -124,9 +132,9 @@ const app = new Vue({
     	},
     	submit_entry() {
     		let list = '';
-    		if(this.entry.list == 'blacklist' || this.entry.list == 'whitelist')
+    		if(this.entry.list.value == 'blacklist' || this.entry.list.value == 'whitelist')
     		{
-    			list = this.entry.list;
+    			list = this.entry.list.value;
     		}
     		if(list != '')
     		{
@@ -142,7 +150,6 @@ const app = new Vue({
                     app.toggle_modal();
                 });
     		}
-
     	}
     }
 });

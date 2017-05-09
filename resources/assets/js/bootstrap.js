@@ -10,8 +10,11 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueSelect from 'vue-select';
+import Vuetify from 'vuetify'
+import FlashOverlay from './components/FlashOverlay.vue';
 window.Vue = Vue;
-Vue.component('v-select', VueSelect.VueSelect);
+Vue.use(Vuetify);
+Vue.component('v-flash-overlay', FlashOverlay);
 /**
  * We'll register a HTTP interceptor to attach the "CSRF" header to each of
  * the outgoing requests issued by this application. The CSRF middleware

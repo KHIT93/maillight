@@ -18,14 +18,26 @@ const app = new Vue({
         js_enabled: true,
         filter_options: [],
         active_filters: [],
+        operators: [
+            {text: "is equal to", value: "="},
+            {text: "is not equal to", value: "<>"},
+            {text: "is greater than", value: ">"},
+            {text: "is greater than or equal to", value: ">="},
+            {text: "is less than", value: "<"},
+            {text: "is less than or equal to", value: "<="},
+            {text: "contains", value: "LIKE"},
+            {text: "does not contain", value: "NOT LIKE"},
+            {text: "is empty", value: "IS NULL"},
+            {text: "Is not empty", value: "IS NOT NULL"},
+        ],
         statistics: {
             new: '',
             old: '',
             count: 0
         },
         new_filter: {
-        	field: '',
-        	operator: '=',
+        	field: null,
+        	operator: null,
         	value: ''
         }
     },
@@ -63,7 +75,11 @@ const app = new Vue({
     	apply_filter() {
             this.is_loading = true;
             let data = {};
-            data['reports_filter_domain'] = this.new_filter;
+            data['reports_filter_domain'] = {
+                field: this.new_filter.field.value,
+                operator: this.new_filter.operator.value,
+                value: this.new_filter.value
+            };
             console.log(data);
     		this.$http.post('/reports/filter?api_token='+Laravel.api_token, data).then(function(response){
     			console.log(response);

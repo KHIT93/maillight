@@ -1,6 +1,77 @@
 @extends('layouts.app')
-
+@section('navigation')
+@endsection
+<!-- Main Content -->
 @section('content')
+<v-dialog v-model="show_dialog" persistent width="600">
+    <v-card>
+        <v-card-row>
+            <v-card-title>Reset password</v-card-title>
+        </v-card-row>
+        <v-card-row>
+            <v-card-text>
+                <form role="form" method="POST" action="{{ url('/password/reset') }}" @submit.prevent="reset_password">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="token" v-model="reset_token">
+                    <v-alert error :value="error">
+                        <template v-for="item in error">
+                            <template v-for="message in item">
+                                @{{ message }}<br/>
+                            </template>
+                        </template>
+                    </v-alert>
+                    <v-alert info :value="status">
+                        @{{ status }}
+                        @if (session('status'))
+                            {{ session('status') }}
+                        @endif
+                    </v-alert>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="email"
+                            label="Email"
+                            required
+                            v-model="email"
+                            type="email"
+                            autofocus
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="password"
+                            label="Password"
+                            required
+                            v-model="password"
+                            type="password"
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="password_confirmation"
+                            label="Confirm Password"
+                            required
+                            v-model="password_confirmation"
+                            type="password"
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-btn primary :loading="loading" :disabled="loading" type="submit" @click.native="loading = true">
+                        Reset Password
+                        <span slot="loader" class="custom-loader">
+                          <v-icon>cached</v-icon>
+                        </span>
+                    </v-btn>
+                </form>
+            </v-card-text>
+        </v-card-row>
+    </v-card>
+</v-dialog>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -73,4 +144,9 @@
         </div>
     </div>
 </div>
+
+@endsection
+
+@section('scripts')
+<script async src="/js/password_reset.js"></script>
 @endsection

@@ -1,47 +1,53 @@
 @extends('layouts.app')
-
+@section('navigation')
+@endsection
 <!-- Main Content -->
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+<v-dialog v-model="show_dialog" persistent width="600">
+    <v-card>
+        <v-card-row>
+            <v-card-title>Forgot your password?</v-card-title>
+        </v-card-row>
+        <v-card-row>
+            <v-card-text>
+                <p>Please type in your email address and we will send you a link to reset your password</p>
+                <form role="form" method="POST" action="{{ url('/password/email') }}" @submit.prevent="send_link">
+                    {{ csrf_field() }}
+                    <v-alert error :value="error">
+                        <template v-for="item in error">
+                            <template v-for="message in item">
+                                @{{ message }}<br/>
+                            </template>
+                        </template>
+                    </v-alert>
+                    <v-alert info :value="status">
+                        @{{ status }}
+                    </v-alert>
+                    <v-row row>
+                        <v-col xs12>
+                          <v-text-field
+                            name="email"
+                            label="Email"
+                            required
+                            v-model="email"
+                            type="email"
+                            autofocus
+                          />
+                        </v-col>
+                    </v-row>
+                    <v-btn info :loading="loading" :disabled="loading" type="submit" @click.native="loading = true">
+                        Send Password Reset Link
+                        <span slot="loader" class="custom-loader">
+                          <v-icon>cached</v-icon>
+                        </span>
+                    </v-btn>
+                </form>
+            </v-card-text>
+        </v-card-row>
+    </v-card>
+</v-dialog>
+@endsection
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+@section('scripts')
+<script async src="/js/password_reset.js"></script>
 @endsection

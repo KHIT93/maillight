@@ -18,7 +18,7 @@ use Illuminate\Http\Request;
 });*/
 Route::post('/blacklist/search', 'BlacklistsController@search');
 Route::put('/blacklist/create', 'BlacklistsController@store');
-Route::delete('/blacklist/destroy/{blacklist}', 'WhitelistsController@destroy');
+Route::delete('/blacklist/destroy/{blacklist}', 'BlacklistsController@destroy');
 
 Route::post('/whitelist/search', 'WhitelistsController@search');
 Route::put('/whitelist/create', 'WhitelistsController@store');
@@ -32,3 +32,6 @@ Route::post('/sa/release', 'SpamAssassinController@release');
 Route::delete('/sa/destroy', 'SpamAssassinController@destroy');
 Route::post('/sa/learn', 'SpamAssassinController@learn');
 Route::post('/sa/update-rules', 'SpamAssassinRulesController@update');
+
+Route::post('/login/redirect', 'Auth\LoginController@getRedirectAddress');
+Route::post('/password-reset/redirect', 'Auth\ResetPasswordController@getRedirectAddress');

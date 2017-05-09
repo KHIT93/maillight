@@ -1,12 +1,15 @@
 {
   "/js/reports_messages_by_date.js": "/js/reports_messages_by_date.js",
-  "/js/app.js": "/js/app.js",
-  "/css/app.css": "/css/app.css",
+  "/js/user_form.js": "/js/user_form.js",
   "/js/tools.js": "/js/tools.js",
   "/js/settings.js": "/js/settings.js",
   "/js/reports.js": "/js/reports.js",
+  "/js/password_reset.js": "/js/password_reset.js",
   "/js/messages.js": "/js/messages.js",
   "/js/message_details.js": "/js/message_details.js",
   "/js/login.js": "/js/login.js",
-  "/js/lists.js": "/js/lists.js"
+  "/js/lists.js": "/js/lists.js",
+  "/js/app.js": "/js/app.js",
+  "/mix.js": "/mix.js",
+  "/css/app.css": "/css/app.css"
 }

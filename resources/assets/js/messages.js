@@ -20,6 +20,14 @@ const app = new Vue({
         is_loading: false,
         js_enabled: true,
         messages: [],
+        headers: [
+            {value: 'Host'},
+            {value: 'Date/Time'},
+            {value: 'From'},
+            {value: 'To'},
+            {value: 'Subject'},
+            {value: 'Status'}
+        ]
     },
     mounted: function() {
     	this.update_messages();

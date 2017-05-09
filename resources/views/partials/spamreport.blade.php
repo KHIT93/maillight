@@ -1,4 +1,4 @@
-<table class=" table is-narrow sa_rules_report">
+<table class="datatable table sa_rules_report">
 	<thead>
 		<tr>
 			<th>Score</th>
