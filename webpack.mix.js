@@ -21,4 +21,5 @@ mix.stylus('resources/assets/stylus/app.styl', 'public/css')
    .js('resources/assets/js/settings.js', 'public/js')
    .js('resources/assets/js/tools.js', 'public/js')
    .js('resources/assets/js/user_form.js', 'public/js')
-   .js('resources/assets/js/login.js', 'public/js');
+   .js('resources/assets/js/login.js', 'public/js')
+   .js('resources/assets/js/password_reset.js', 'public/js');

@@ -29,4 +29,15 @@ class ForgotPasswordController extends Controller
     {
         $this->middleware('guest');
     }
+
+    /**
+     * Get the response for a successful password reset link.
+     *
+     * @param  string  $response
+     * @return \Illuminate\Http\Response
+     */
+    protected function sendResetLinkResponse($response)
+    {
+        return (request()->expectsJson()) ? response(['status' => trans($response)]) : back()->with('status', trans($response));
+    }
 }

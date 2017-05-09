@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 220);
+/******/ 	return __webpack_require__(__webpack_require__.s = 215);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -767,7 +767,7 @@ module.exports = function enhanceError(error, config, code, response) {
 
 /***/ }),
 
-/***/ 157:
+/***/ 152:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -789,12 +789,58 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  */
 
 var app = new Vue({
-  el: '#app',
-  data: {
-    is_loading: false,
-    js_enabled: true,
-    report_checked: false
-  }
+    el: '#app',
+    data: {
+        is_loading: false,
+        loading: false,
+        js_enabled: true,
+        loader: '',
+        email: '',
+        reset_token: '',
+        password: '',
+        password_confirmation: '',
+        show_dialog: true,
+        error: null,
+        status: null
+    },
+    mounted: function mounted() {
+        this.reset_token = window.location.pathname.split('/password/reset/')[1];
+    },
+
+    methods: {
+        send_link: function send_link() {
+            this.$http.post('/password/email', { email: this.email }).then(function (response) {
+                console.log(response);
+                app.status = response.data.status;
+                app.loading = false;
+            }).catch(function (error) {
+                app.error = error.response.data.email;
+                app.loading = false;
+                console.log(error.response);
+            });
+        },
+        reset_password: function reset_password() {
+            this.$http.post('/password/reset', { email: this.email, password: this.password, password_confirmation: this.password_confirmation, token: this.reset_token }).then(function (response) {
+                console.log(response);
+                app.status = "Your password has been reset. You are now being logged in";
+                app.loading = false;
+                app.get_redirect(response.data);
+            }).catch(function (error) {
+                app.error = error.response.data;
+                app.loading = false;
+                console.log(error.response);
+            });
+        },
+        get_redirect: function get_redirect(userdata) {
+            this.$http.post('/api/password-reset/redirect?api_token=' + userdata.api_token).then(function (response) {
+                console.log(response.data);
+                window.location.href = response.data.path;
+            }).catch(function (error) {
+                console.log(error.response);
+                app.loading = false;
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -1163,6 +1209,14 @@ module.exports = (
 
 /***/ }),
 
+/***/ 215:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(152);
+
+
+/***/ }),
+
 /***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1181,14 +1235,6 @@ module.exports = function isAbsoluteURL(url) {
   // by any combination of letters, digits, plus, period, or hyphen.
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
-
-
-/***/ }),
-
-/***/ 220:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(157);
 
 
 /***/ }),

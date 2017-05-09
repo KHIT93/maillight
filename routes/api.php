@@ -34,3 +34,4 @@ Route::post('/sa/learn', 'SpamAssassinController@learn');
 Route::post('/sa/update-rules', 'SpamAssassinRulesController@update');
 
 Route::post('/login/redirect', 'Auth\LoginController@getRedirectAddress');
+Route::post('/password-reset/redirect', 'Auth\ResetPasswordController@getRedirectAddress');

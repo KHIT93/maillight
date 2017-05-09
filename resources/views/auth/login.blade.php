@@ -19,10 +19,11 @@
                         <v-col xs12>
                           <v-text-field
                             name="username"
-                            label="Username"
+                            label="Email"
                             required
                             v-model="user.email"
                             type="email"
+                            autofocus
                           />
                         </v-col>
                     </v-row>
@@ -38,19 +39,15 @@
                         </v-col>
                     </v-row>
                     <v-btn
-                        info
-                        v-bind:loading="loading"
-                        v-on:click.native="loader = 'loading'"
-                        v-bind:disabled="loading"
-                        type="submit"
-                        @click.native="loading = true"
-                        >
+                        info :loading="loading" :disabled="loading" type="submit" @click.native="loading = true">
                         Log in
                         <span slot="loader" class="custom-loader">
                           <v-icon>cached</v-icon>
                         </span>
                     </v-btn>
-                    <v-btn class="blue--text darken-1" flat="flat" href="{{ url('/password/reset') }}">Forgot Password?</v-btn>
+                    <a class="blue--text darken-1 btn btn--flat btn--raised" href="{{ url('/password/reset') }}">
+                        <span class="btn__content">Forgot Password?</span>
+                    </a>
                 </form>
             </v-card-text>
         </v-card-row>

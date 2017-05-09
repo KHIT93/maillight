@@ -94,7 +94,7 @@ class MigrateMailwatchCommand extends Command
             $this->line(\Carbon\Carbon::now()->__toString());
             $this->line('Migrating user accounts');
             //Copy users to the new users table
-            \DB::statement('INSERT INTO `users` (`uuid`, `name`, `email`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, `api_token`) SELECT uuid(), `fullname`, `username`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, RAND(60) FROM `mailwatch_users`');
+            \DB::statement('INSERT INTO `users` (`uuid`, `name`, `email`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, `api_token`) SELECT uuid(), `fullname`, `username`, `password`, `quarantine_report`, `spamscore`, `highspamscore`, `noscan`, `quarantine_rcpt`, concat(lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0), lpad(conv(floor(rand()*pow(36,6)), 10, 36), 6, 0)) FROM `mailwatch_users`');
             $this->info('Users have been migrated');
             if ($this->confirm('Would you like to remove the old users table?')) { Schema::drop('mailwatch_users'); }
             $this->info('Migration is now completed. All users will need reset their passwords due to the usage of stronger encryption');

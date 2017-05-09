@@ -20,19 +20,24 @@ const app = new Vue({
         loading: false,
         js_enabled: true,
         loader: '',
-
-        user: {
-            email: '',
-            password: ''
-        },
+        email: '',
+        reset_token: '',
+        password: '',
+        password_confirmation: '',
         show_dialog: true,
-        error: null
+        error: null,
+        status: null,
+    },
+    mounted()
+    {
+        this.reset_token = window.location.pathname.split('/password/reset/')[1];
     },
     methods: {
-        login() {
-            this.$http.post('/login', this.user).then(function(response){
+        send_link() {
+            this.$http.post('/password/email', { email: this.email }).then(function(response){
                 console.log(response);
-                app.get_redirect(response.data);
+                app.status = response.data.status;
+                app.loading = false;
             })
             .catch(function(error){
                 app.error = error.response.data.email;
@@ -40,8 +45,21 @@ const app = new Vue({
                 console.log(error.response);
             });
         },
+        reset_password() {
+            this.$http.post('/password/reset', { email: this.email, password: this.password, password_confirmation: this.password_confirmation, token: this.reset_token }).then(function(response){
+                console.log(response);
+                app.status = "Your password has been reset. You are now being logged in";
+                app.loading = false;
+                app.get_redirect(response.data);
+            })
+            .catch(function(error){
+                app.error = error.response.data;
+                app.loading = false;
+                console.log(error.response);
+            });
+        },
         get_redirect(userdata) {
-            this.$http.post('/api/login/redirect?api_token='+userdata.api_token).then(function(response){
+            this.$http.post('/api/password-reset/redirect?api_token='+userdata.api_token).then(function(response){
                 console.log(response.data);
                 window.location.href = response.data.path;
             })
