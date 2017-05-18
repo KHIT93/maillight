@@ -4,6 +4,7 @@ namespace MailLight\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use MailLight\Models\Traits\UuidForKey;
 
 class User extends Authenticatable
 {

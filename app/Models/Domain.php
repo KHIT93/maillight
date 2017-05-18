@@ -3,6 +3,7 @@
 namespace MailLight\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use MailLight\Models\Traits\UuidForKey;
 
 class Domain extends Model
 {

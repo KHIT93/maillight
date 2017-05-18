@@ -1,6 +1,6 @@
 <?php
 
-namespace MailLight\Models;
+namespace MailLight\Models\Traits;
 
 use Ramsey\Uuid\Uuid;
 
